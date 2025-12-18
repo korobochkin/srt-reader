@@ -1,0 +1,13 @@
+---
+services:
+  php:
+    build:
+      dockerfile: ./development/php/Dockerfile
+      context: ./
+    init: true
+    tty: true
+    volumes:
+      - ./:/root/app
+      - ./development/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    ports:
+      - '127.0.0.1:9009:9009'
