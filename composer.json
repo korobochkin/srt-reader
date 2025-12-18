@@ -1,0 +1,22 @@
+{
+    "name": "korobochkin/srt-reader",
+    "description": "Reader of srt files",
+    "type": "library",
+    "license": "AGPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Korobochkin\\SrtReader\\": "source/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nicolas Korobochkin",
+            "homepage": "https://github.com/korobochkin/",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.4"
+    }
+}
