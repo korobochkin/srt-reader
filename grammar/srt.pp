@@ -8,7 +8,7 @@
 // Tokens in order of specificity
 %token  T_TIMECODE      \d{2}:\d{2}:\d{2},\d{3}
 %token  T_ARROW         \h*-->\h*
-%token  T_NUMBER        \d+(?=\r?\n)
+%token  T_NUMBER        (?<=^)\d+(?=\r?\n)
 %token  T_BLANK         \r?\n\r?\n
 %token  T_NEWLINE       \r?\n
 %token  T_TEXT          (?-s).+
