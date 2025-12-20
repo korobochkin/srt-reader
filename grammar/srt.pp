@@ -18,14 +18,14 @@
     ;
 
 #Block
-    : <T_NUMBER> <T_NEWLINE>
-      Timecode() <T_NEWLINE>
+    : <T_NUMBER> ::T_NEWLINE::
+      Timecode() ::T_NEWLINE::
       TextLines()
-      <T_BLANK>?
+      ::T_BLANK::?
     ;
 
 #Timecode
-    : <T_TIMECODE> <T_ARROW> <T_TIMECODE>
+    : <T_TIMECODE> ::T_ARROW:: <T_TIMECODE>
     ;
 
 #TextLines
@@ -33,5 +33,5 @@
     ;
 
 #TextLine
-    : <T_TEXT> <T_NEWLINE>?
+    : <T_TEXT> ::T_NEWLINE::?
     ;
