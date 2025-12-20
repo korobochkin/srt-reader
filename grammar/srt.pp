@@ -32,6 +32,6 @@
     : TextLine()+
     ;
 
-#TextLine
+TextLine
     : <T_TEXT> ::T_NEWLINE::?
     ;
