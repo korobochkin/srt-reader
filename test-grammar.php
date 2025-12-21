@@ -7,9 +7,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Korobochkin\SrtReader\SrtGrammarParser;
 
 // Read the full SRT file
-$content = file_get_contents(__DIR__ . '/tmp/test.srt');
-
-$parser = new SrtGrammarParser(__DIR__ . '/grammar/srt.pp');
+$content = fopen(__DIR__ . '/tmp/test.srt', 'r');
+$grammar = fopen(__DIR__ . '/grammar/srt.pp', 'r');
+$parser = new SrtGrammarParser($grammar);
 
 $count = 0;
 foreach ($parser->parseToBlocks($content) as $block) {

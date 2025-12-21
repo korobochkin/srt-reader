@@ -12,21 +12,20 @@ class SrtGrammarParser
 {
     private Compiler $compiler;
 
-    private string $grammarPath;
-
-    public function __construct(string $grammarPath)
+    /**
+     * @param resource $grammar
+     */
+    public function __construct($grammar)
     {
-        $this->grammarPath = $grammarPath;
         $this->compiler = new Compiler();
-        $this->compiler->load(file_get_contents($this->grammarPath));
+        $this->compiler->load($grammar);
     }
 
     /**
-     * Parse SRT content and convert to SrtBlock objects
-     *
+     * @param resource $content
      * @return \Generator<SrtBlock>
      */
-    public function parseToBlocks(string $content): \Generator
+    public function parseToBlocks($content): \Generator
     {
         $ast = $this->parse($content);
 
@@ -38,9 +37,9 @@ class SrtGrammarParser
     }
 
     /**
-     * Parse SRT content and return AST
+     * @param resource $content
      */
-    public function parse(string $content): PrintableNode
+    public function parse($content): PrintableNode
     {
         return $this->compiler->parse($content);
     }
@@ -58,7 +57,7 @@ class SrtGrammarParser
         foreach ($node->children as $child) {
             if ($child instanceof Token) {
                 if ($child->getName() === 'T_NUMBER') {
-                    $number = (int)$child->getValue();
+                    $number = (int) $child->getValue();
                 }
             } elseif ($child instanceof PrintableNode) {
                 if ($child->getState() === 'Timecode') {
@@ -99,10 +98,10 @@ class SrtGrammarParser
         [$hms, $ms] = explode(',', $time);
         [$hours, $minutes, $seconds] = explode(':', $hms);
 
-        return ((int)$hours * 3600000)
-            + ((int)$minutes * 60000)
-            + ((int)$seconds * 1000)
-            + (int)$ms;
+        return ((int) $hours * 3600000)
+            + ((int) $minutes * 60000)
+            + ((int) $seconds * 1000)
+            + (int) $ms;
     }
 
     /**
