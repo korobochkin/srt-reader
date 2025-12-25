@@ -6,7 +6,10 @@ code:
 		--format=txt \
 		--no-interaction
 
-grammar/srt.php: grammar/srt.pp
+vendor: composer.json composer.lock
+	composer install
+
+grammar/srt.php: grammar/srt.pp vendor
 	php ./development/grammar-generator/grammar-generator.php
 
 grammar: grammar/srt.php
