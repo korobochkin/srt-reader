@@ -61,7 +61,26 @@ class SrtGrammar
                 'TextLines' => new \Phplrt\Parser\Grammar\Repetition(8, 1, \INF),
                 'Timecode' => new \Phplrt\Parser\Grammar\Concatenation([5, 6, 7]),
             ],
-            'reducers' => [],
+            'reducers' => [
+                'Block' => static function (\Phplrt\Parser\Context $ctx, $children) {
+                    // The "$offset" variable is an auto-generated
+                    $offset = $ctx->lastProcessedToken->getOffset();
+
+                    // The "$state" variable is an auto-generated
+                    $state = $ctx->state;
+
+                    return new \Korobochkin\SrtReader\Ast\SrtBlockNode($state, $children, $offset);
+                },
+                'Document' => static function (\Phplrt\Parser\Context $ctx, $children) {
+                    // The "$offset" variable is an auto-generated
+                    $offset = $ctx->lastProcessedToken->getOffset();
+
+                    // The "$state" variable is an auto-generated
+                    $state = $ctx->state;
+
+                    return new \Korobochkin\SrtReader\Ast\SrtDocumentNode($state, $children, $offset);
+                },
+            ],
         ];
     }
 }

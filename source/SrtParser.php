@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Korobochkin\SrtReader;
 
-use Phplrt\Compiler\Runtime\PrintableNodeBuilder;
 use Phplrt\Contracts\Lexer\LexerInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Lexer\Lexer;
@@ -28,7 +27,7 @@ class SrtParser
             $config['grammar'],
             [
                 ParserConfigsInterface::CONFIG_INITIAL_RULE => $config['initial'],
-                ParserConfigsInterface::CONFIG_AST_BUILDER => new PrintableNodeBuilder(),
+                ParserConfigsInterface::CONFIG_AST_BUILDER => $config['reducers'],
             ]
         );
     }

@@ -13,11 +13,11 @@
 %token  T_NEWLINE       \r?\n
 %token  T_TEXT          (?-s).+
 
-#Document
+#Document -> Korobochkin\SrtReader\Ast\SrtDocumentNode
     : Block()*
     ;
 
-#Block
+#Block -> Korobochkin\SrtReader\Ast\SrtBlockNode
     : <T_NUMBER> ::T_NEWLINE::
       Timecode() ::T_NEWLINE::
       TextLines()
