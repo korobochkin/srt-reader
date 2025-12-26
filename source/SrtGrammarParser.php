@@ -52,7 +52,7 @@ class SrtGrammarParser
         $number = 0;
         $startTime = 0;
         $endTime = 0;
-        $textLines = [];
+        $textLines = array();
 
         foreach ($node->children as $child) {
             if ($child instanceof Token) {
@@ -80,14 +80,14 @@ class SrtGrammarParser
      */
     private function extractTimecode(PrintableNode $node): array
     {
-        $times = [];
+        $times = array();
         foreach ($node->children as $child) {
             if ($child instanceof Token && $child->getName() === 'T_TIMECODE') {
                 $times[] = $this->parseTimecode($child->getValue());
             }
         }
 
-        return [$times[0] ?? 0, $times[1] ?? 0];
+        return array($times[0] ?? 0, $times[1] ?? 0);
     }
 
     /**
@@ -111,7 +111,7 @@ class SrtGrammarParser
      */
     private function extractTextLines(PrintableNode $node): array
     {
-        $lines = [];
+        $lines = array();
         foreach ($node->children as $child) {
             if ($child instanceof PrintableNode && $child->getState() === 'TextLine') {
                 foreach ($child->children as $token) {

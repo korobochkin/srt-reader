@@ -25,10 +25,10 @@ class SrtParser
         $this->parser = new Parser(
             $this->lexer,
             $config['grammar'],
-            [
+            array(
                 ParserConfigsInterface::CONFIG_INITIAL_RULE => $config['initial'],
                 ParserConfigsInterface::CONFIG_AST_BUILDER => $config['reducers'],
-            ]
+            )
         );
     }
 

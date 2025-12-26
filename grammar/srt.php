@@ -15,10 +15,10 @@ declare(strict_types=1);
  *     transitions?: array<array-key, mixed>
  * }
  */
-return [
+return array(
     'initial' => 'Document',
-    'tokens' => [
-        'default' => [
+    'tokens' => array(
+        'default' => array(
             'T_BOM' => '\\x{FEFF}',
             'T_TIMECODE' => '\\d{2}:\\d{2}:\\d{2},\\d{3}',
             'T_ARROW' => '\\h*-->\\h*',
@@ -26,13 +26,13 @@ return [
             'T_BLANK' => '\\r?\\n\\r?\\n',
             'T_NEWLINE' => '\\r?\\n',
             'T_TEXT' => '(?-s).+',
-        ],
-    ],
-    'skip' => [
+        ),
+    ),
+    'skip' => array(
         'T_BOM',
-    ],
-    'transitions' => [],
-    'grammar' => [
+    ),
+    'transitions' => array(),
+    'grammar' => array(
         0 => new \Phplrt\Parser\Grammar\Lexeme('T_BLANK', false),
         1 => new \Phplrt\Parser\Grammar\Lexeme('T_NUMBER', true),
         2 => new \Phplrt\Parser\Grammar\Lexeme('T_NEWLINE', false),
@@ -41,16 +41,16 @@ return [
         5 => new \Phplrt\Parser\Grammar\Lexeme('T_TIMECODE', true),
         6 => new \Phplrt\Parser\Grammar\Lexeme('T_ARROW', false),
         7 => new \Phplrt\Parser\Grammar\Lexeme('T_TIMECODE', true),
-        8 => new \Phplrt\Parser\Grammar\Concatenation([10, 11]),
+        8 => new \Phplrt\Parser\Grammar\Concatenation(array(10, 11)),
         9 => new \Phplrt\Parser\Grammar\Lexeme('T_NEWLINE', false),
         10 => new \Phplrt\Parser\Grammar\Lexeme('T_TEXT', true),
         11 => new \Phplrt\Parser\Grammar\Optional(9),
-        'Block' => new \Phplrt\Parser\Grammar\Concatenation([1, 2, 'Timecode', 3, 'TextLines', 4]),
+        'Block' => new \Phplrt\Parser\Grammar\Concatenation(array(1, 2, 'Timecode', 3, 'TextLines', 4)),
         'Document' => new \Phplrt\Parser\Grammar\Repetition('Block', 0, \INF),
         'TextLines' => new \Phplrt\Parser\Grammar\Repetition(8, 1, \INF),
-        'Timecode' => new \Phplrt\Parser\Grammar\Concatenation([5, 6, 7]),
-    ],
-    'reducers' => [
+        'Timecode' => new \Phplrt\Parser\Grammar\Concatenation(array(5, 6, 7)),
+    ),
+    'reducers' => array(
         'Block' => static function (\Phplrt\Parser\Context $ctx, $children) {
             // The "$offset" variable is an auto-generated
             $offset = $ctx->lastProcessedToken->getOffset();
@@ -69,5 +69,5 @@ return [
 
             return new \Korobochkin\SrtReader\Ast\SrtDocumentNode($state, $children, $offset);
         },
-    ],
-];
+    ),
+);

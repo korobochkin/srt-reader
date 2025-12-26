@@ -50,7 +50,7 @@ class SrtBlockNode
      */
     public function getLines(): array
     {
-        $lines = [];
+        $lines = array();
         // Text tokens start at index 3
         for ($i = 3; $i < \count($this->children); $i++) {
             $lines[] = $this->children[$i]->getValue();
