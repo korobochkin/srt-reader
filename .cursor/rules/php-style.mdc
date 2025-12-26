@@ -1,0 +1,46 @@
+---
+description: PHP coding style rules for this project
+globs: ["**/*.php"]
+---
+
+# PHP Coding Style Rules
+
+## No Constructor Property Promotion
+
+Do not use PHP 8.0+ constructor property promotion syntax. Always declare class properties explicitly in the class body and assign them in the constructor.
+
+### Bad (do not use):
+
+```php
+class Example
+{
+    public function __construct(
+        private readonly string $state,
+        private readonly array $children,
+        private readonly int $offset,
+    ) {}
+}
+```
+
+### Good (use this style):
+
+```php
+class Example
+{
+    private readonly string $state;
+
+    private readonly array $children;
+
+    private readonly int $offset;
+
+    public function __construct(
+        string $state,
+        array $children,
+        int $offset,
+    ) {
+        $this->state = $state;
+        $this->children = $children;
+        $this->offset = $offset;
+    }
+}
+```
