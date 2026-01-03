@@ -33,13 +33,25 @@ class SrtParser
     }
 
     /**
-     * @param resource $source
+     * @param string|resource $source The SRT content as a string, or a file resource
      * @return iterable
      * @throws \Phplrt\Contracts\Parser\ParserExceptionInterface
      * @throws \Phplrt\Contracts\Parser\ParserRuntimeExceptionInterface
      */
     public function parse($source): iterable
     {
+        /**
+         * Convert stream resources to strings to avoid an infinite loop bug in phplrt.
+         * When parsing fails with a stream resource, phplrt's PositionFactory tries to
+         * read from the stream to create error messages, but the stream position is at
+         * EOF after lexing, causing an infinite loop in the fread() loop.
+         *
+         * @see \Phplrt\Position\PositionFactory::createFromOffset
+         */
+        if (\is_resource($source) && get_resource_type($source) === 'stream') {
+            $source = stream_get_contents($source);
+        }
+
         return $this->parser->parse($source);
     }
 }
