@@ -8,7 +8,7 @@
 // Tokens in order of specificity
 %token  T_TIMECODE      (\d{2}):(\d{2}):(\d{2}),(\d{3})
 %token  T_ARROW         \h*-->\h*
-%token  T_NUMBER        (?<=^)\d+(?=\r?\n)
+%token  T_INDEX         (?<=^)\d+(?=\r?\n)
 %token  T_BLANK         \r?\n\r?\n
 %token  T_NEWLINE       \r?\n
 %token  T_TEXT          (?<=^)(?-s).+
@@ -18,7 +18,7 @@
     ;
 
 #Block -> { return \Korobochkin\SrtReader\Ast\SrtBlockNodeFactory::create($children); }
-    : <T_NUMBER> ::T_NEWLINE::
+    : <T_INDEX> ::T_NEWLINE::
       Timecode() ::T_NEWLINE::
       TextLines()
       ::T_BLANK::?

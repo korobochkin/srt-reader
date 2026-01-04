@@ -22,7 +22,7 @@ return array(
             'T_BOM' => '\\x{FEFF}',
             'T_TIMECODE' => '(\\d{2}):(\\d{2}):(\\d{2}),(\\d{3})',
             'T_ARROW' => '\\h*-->\\h*',
-            'T_NUMBER' => '(?<=^)\\d+(?=\\r?\\n)',
+            'T_INDEX' => '(?<=^)\\d+(?=\\r?\\n)',
             'T_BLANK' => '\\r?\\n\\r?\\n',
             'T_NEWLINE' => '\\r?\\n',
             'T_TEXT' => '(?<=^)(?-s).+',
@@ -34,7 +34,7 @@ return array(
     'transitions' => array(),
     'grammar' => array(
         0 => new \Phplrt\Parser\Grammar\Lexeme('T_BLANK', false),
-        1 => new \Phplrt\Parser\Grammar\Lexeme('T_NUMBER', true),
+        1 => new \Phplrt\Parser\Grammar\Lexeme('T_INDEX', true),
         2 => new \Phplrt\Parser\Grammar\Lexeme('T_NEWLINE', false),
         3 => new \Phplrt\Parser\Grammar\Lexeme('T_NEWLINE', false),
         4 => new \Phplrt\Parser\Grammar\Optional(0),
