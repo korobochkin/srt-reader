@@ -1,3 +1,12 @@
+build:
+	docker compose build --quiet
+
+up:
+	docker compose up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
+
+down:
+	docker compose down --remove-orphans --volumes
+
 code:
 	./vendor/bin/php-cs-fixer \
 		fix \
@@ -14,4 +23,9 @@ grammar/srt.php: grammar/srt.pp vendor
 
 grammar: grammar/srt.php code
 
-.PHONY: grammar
+.PHONY: \
+	build \
+	up \
+	down \
+	code \
+	grammar
