@@ -36,7 +36,7 @@ class SrtGrammar
                     'T_INDEX' => '(?<=^)\\d+(?=\\r?\\n)',
                     'T_BLANK' => '\\r?\\n\\r?\\n',
                     'T_NEWLINE' => '\\r?\\n',
-                    'T_TEXT' => '(?<=^)(?-s).+',
+                    'T_TEXT' => '(?<=^)[^\\r\\n]+',
                 ),
             ),
             'skip' => array(

@@ -11,7 +11,7 @@
 %token  T_INDEX         (?<=^)\d+(?=\r?\n)
 %token  T_BLANK         \r?\n\r?\n
 %token  T_NEWLINE       \r?\n
-%token  T_TEXT          (?<=^)(?-s).+
+%token  T_TEXT          (?<=^)[^\r\n]+
 
 #Document -> Korobochkin\SrtReader\Ast\SrtDocumentNode
     : Block()*
