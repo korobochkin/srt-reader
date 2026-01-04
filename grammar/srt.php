@@ -52,14 +52,6 @@ return array(
     ),
     'reducers' => array(
         'Block' => static fn(\Phplrt\Parser\Context $ctx, $children) => \Korobochkin\SrtReader\Ast\SrtBlockNodeFactory::create($children),
-        'Document' => static function (\Phplrt\Parser\Context $ctx, $children) {
-            // The "$offset" variable is an auto-generated
-            $offset = $ctx->lastProcessedToken->getOffset();
-
-            // The "$state" variable is an auto-generated
-            $state = $ctx->state;
-
-            return new \Korobochkin\SrtReader\Ast\SrtDocumentNode($state, $children, $offset);
-        },
+        'Document' => static fn(\Phplrt\Parser\Context $ctx, $children) => \Korobochkin\SrtReader\Ast\SrtDocumentNodeFactory::create($children),
     ),
 );

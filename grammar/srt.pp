@@ -13,7 +13,7 @@
 %token  T_NEWLINE       \r?\n
 %token  T_TEXT          (?<=^)[^\r\n]+
 
-#Document -> Korobochkin\SrtReader\Ast\SrtDocumentNode
+#Document -> { return \Korobochkin\SrtReader\Ast\SrtDocumentNodeFactory::create($children); }
     : Block()*
     ;
 

@@ -6,20 +6,13 @@ namespace Korobochkin\SrtReader\Ast;
 
 class SrtDocumentNode implements \IteratorAggregate
 {
-    public readonly string $state;
-
-    /** @var array<SrtBlockNode> */
+    /** @var list<SrtBlockNode> */
     public readonly array $children;
-    public readonly int $offset;
 
     public function __construct(
-        string $state,
         array $children,
-        int $offset,
     ) {
-        $this->state = $state;
         $this->children = $children;
-        $this->offset = $offset;
     }
 
     public function getIterator(): \Traversable
