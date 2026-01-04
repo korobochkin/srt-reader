@@ -6,7 +6,7 @@
 %skip   T_BOM           \x{FEFF}
 
 // Tokens in order of specificity
-%token  T_TIMECODE      (?<hour>\d{2}):(?<minute>\d{2}):(?<second>\d{2}),(?<millisecond>\d{3})
+%token  T_TIMECODE      (\d{2}):(\d{2}):(\d{2}),(\d{3})
 %token  T_ARROW         \h*-->\h*
 %token  T_NUMBER        (?<=^)\d+(?=\r?\n)
 %token  T_BLANK         \r?\n\r?\n
@@ -17,7 +17,7 @@
     : Block()*
     ;
 
-#Block -> Korobochkin\SrtReader\Ast\SrtBlockNode
+#Block -> { return \Korobochkin\SrtReader\Ast\SrtBlockNodeFactory::create($children); }
     : <T_NUMBER> ::T_NEWLINE::
       Timecode() ::T_NEWLINE::
       TextLines()

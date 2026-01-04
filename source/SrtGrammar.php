@@ -31,7 +31,7 @@ class SrtGrammar
             'tokens' => array(
                 'default' => array(
                     'T_BOM' => '\\x{FEFF}',
-                    'T_TIMECODE' => '(?<hour>\\d{2}):(?<minute>\\d{2}):(?<second>\\d{2}),(?<millisecond>\\d{3})',
+                    'T_TIMECODE' => '(\\d{2}):(\\d{2}):(\\d{2}),(\\d{3})',
                     'T_ARROW' => '\\h*-->\\h*',
                     'T_NUMBER' => '(?<=^)\\d+(?=\\r?\\n)',
                     'T_BLANK' => '\\r?\\n\\r?\\n',
@@ -62,15 +62,7 @@ class SrtGrammar
                 'Timecode' => new \Phplrt\Parser\Grammar\Concatenation(array(5, 6, 7)),
             ),
             'reducers' => array(
-                'Block' => static function (\Phplrt\Parser\Context $ctx, $children) {
-                    // The "$offset" variable is an auto-generated
-                    $offset = $ctx->lastProcessedToken->getOffset();
-
-                    // The "$state" variable is an auto-generated
-                    $state = $ctx->state;
-
-                    return new \Korobochkin\SrtReader\Ast\SrtBlockNode($state, $children, $offset);
-                },
+                'Block' => static fn(\Phplrt\Parser\Context $ctx, $children) => \Korobochkin\SrtReader\Ast\SrtBlockNodeFactory::create($children),
                 'Document' => static function (\Phplrt\Parser\Context $ctx, $children) {
                     // The "$offset" variable is an auto-generated
                     $offset = $ctx->lastProcessedToken->getOffset();

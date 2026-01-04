@@ -4,76 +4,49 @@ declare(strict_types=1);
 
 namespace Korobochkin\SrtReader\Ast;
 
-class SrtBlockNode
+use Phplrt\Contracts\Ast\NodeInterface;
+
+class SrtBlockNode implements NodeInterface
 {
-    private readonly string $state;
-    private readonly array $children;
-    private readonly int $offset;
+    private readonly int $index;
+    private readonly int $startTime;
+    private readonly int $endTime;
+    private readonly string $text;
 
     public function __construct(
-        string $state,
-        array $children,
-        int $offset,
+        int $index,
+        int $startTime,
+        int $endTime,
+        string $text,
     ) {
-        $this->state = $state;
-        $this->children = $children;
-        $this->offset = $offset;
+        $this->index = $index;
+        $this->startTime = $startTime;
+        $this->endTime = $endTime;
+        $this->text = $text;
     }
 
-    public function getNumber(): int
+    public function getIndex(): int
     {
-        return (int) $this->children[0]->getValue();
+        return $this->index;
     }
 
-    public function getStartTime(): string
+    public function getStartTime(): int
     {
-        return $this->children[1]->getValue();
+        return $this->startTime;
     }
 
-    public function getEndTime(): string
+    public function getEndTime(): int
     {
-        return $this->children[2]->getValue();
-    }
-
-    public function getStartTimeMs(): int
-    {
-        return $this->parseTimecode($this->getStartTime());
-    }
-
-    public function getEndTimeMs(): int
-    {
-        return $this->parseTimecode($this->getEndTime());
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getLines(): array
-    {
-        $lines = array();
-        // Text tokens start at index 3
-        for ($i = 3; $i < \count($this->children); $i++) {
-            $lines[] = $this->children[$i]->getValue();
-        }
-        return $lines;
+        return $this->endTime;
     }
 
     public function getText(): string
     {
-        return implode("\n", $this->getLines());
+        return $this->text;
     }
 
-    /**
-     * Convert "00:01:23,551" to milliseconds
-     */
-    private function parseTimecode(string $time): int
+    public function getIterator(): \Traversable
     {
-        [$hms, $ms] = explode(',', $time);
-        [$hours, $minutes, $seconds] = explode(':', $hms);
-
-        return ((int) $hours * 3600000)
-            + ((int) $minutes * 60000)
-            + ((int) $seconds * 1000)
-            + (int) $ms;
+        return new \EmptyIterator();
     }
 }
