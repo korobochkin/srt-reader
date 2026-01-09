@@ -31,7 +31,7 @@ class SrtGrammar
             'tokens' => array(
                 'default' => array(
                     'T_BOM' => '\\x{FEFF}',
-                    'T_TIMECODE' => '(\\d{2}):(\\d{2}):(\\d{2}),(\\d{3})',
+                    'T_TIMECODE' => '(\\d{2})[,.:，．。：](\\d{2})[,.:，．。：](\\d{2})[,.:，．。：](\\d{3})',
                     'T_ARROW' => '\\h*-->\\h*',
                     'T_INDEX' => '(?<=^)\\d+(?=\\r?\\n)',
                     'T_BLANK' => '\\r?\\n\\r?\\n',
