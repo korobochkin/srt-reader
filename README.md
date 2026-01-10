@@ -2,6 +2,10 @@
 
 This project uses the [phplrt](https://github.com/phplrt/phplrt) library to parse `.srt` files. While phplrt is a very interesting and powerful project, it suffers from imperfect documentation and a lack of examples. Below you can find some information about how both this code and phplrt work.
 
+## Usage
+
+See [`development/examples/base-example.php`](development/examples/base-example.php) for an example.
+
 ## Terms
 
 | Term     | What It Is                                                  |

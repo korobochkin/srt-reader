@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Korobochkin\SrtReader;
 
+use Korobochkin\SrtReader\Ast\SrtDocumentNode;
 use Phplrt\Contracts\Lexer\LexerInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Lexer\Lexer;
@@ -34,11 +35,11 @@ class SrtParser
 
     /**
      * @param string|resource $source The SRT content as a string, or a file resource
-     * @return iterable
+     * @return SrtDocumentNode
      * @throws \Phplrt\Contracts\Parser\ParserExceptionInterface
      * @throws \Phplrt\Contracts\Parser\ParserRuntimeExceptionInterface
      */
-    public function parse($source): iterable
+    public function parse($source): SrtDocumentNode
     {
         /**
          * Convert stream resources to strings to avoid an infinite loop bug in phplrt.

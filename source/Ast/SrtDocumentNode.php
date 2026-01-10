@@ -15,6 +15,9 @@ class SrtDocumentNode implements \IteratorAggregate
         $this->children = $children;
     }
 
+    /**
+     * @return \Traversable<int, SrtBlockNode>
+     */
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->children);
