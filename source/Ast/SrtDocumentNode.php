@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Korobochkin\SrtReader\Ast;
 
-class SrtDocumentNode implements \IteratorAggregate
+class SrtDocumentNode implements \IteratorAggregate, \Countable
 {
     /** @var list<SrtBlockNode> */
-    public readonly array $children;
+    private readonly array $children;
 
     public function __construct(
         array $children,

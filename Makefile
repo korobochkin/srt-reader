@@ -23,9 +23,15 @@ grammar/srt.php: grammar/srt.pp vendor
 
 grammar: grammar/srt.php code
 
+git-diff:
+	mkdir -p tmp
+	rm -f tmp/diff.txt
+	git diff main --no-color -U10 --raw --output=tmp/diff.txt
+
 .PHONY: \
 	build \
 	up \
 	down \
 	code \
-	grammar
+	grammar \
+	git-diff

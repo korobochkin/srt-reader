@@ -36,6 +36,7 @@ class SrtParser
     /**
      * @param string|resource $source The SRT content as a string, or a file resource
      * @return SrtDocumentNode
+     * @throws \RuntimeException
      * @throws \Phplrt\Contracts\Parser\ParserExceptionInterface
      * @throws \Phplrt\Contracts\Parser\ParserRuntimeExceptionInterface
      */
@@ -51,6 +52,9 @@ class SrtParser
          */
         if (\is_resource($source) && get_resource_type($source) === 'stream') {
             $source = stream_get_contents($source);
+            if ($source === false) {
+                throw new \RuntimeException('Failed to read stream content');
+            }
         }
 
         return $this->parser->parse($source);

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// @generated - sync with SrtGrammar class when updating
+
 /**
  * @var array{
  *     initial: array-key,
