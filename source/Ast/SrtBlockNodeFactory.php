@@ -15,6 +15,9 @@ class SrtBlockNodeFactory
      */
     public static function create(array $children): SrtBlockNode
     {
+        if (\count($children) < 4) {
+            throw new \InvalidArgumentException('Invalid $children structure: expected at least 3 elements but got ' . \count($children));
+        }
         return new SrtBlockNode(
             (int) $children[0]->getValue(),
             self::createTime($children[1]),
