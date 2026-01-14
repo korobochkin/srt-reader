@@ -33,5 +33,6 @@ git-diff:
 	up \
 	down \
 	code \
+	grammar/srt.php \
 	grammar \
 	git-diff

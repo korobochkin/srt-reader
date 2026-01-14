@@ -17,13 +17,19 @@ try {
         throw new \RuntimeException(sprintf('Failed to open output file: %s', $compiledPath));
     }
 
-    fwrite(
-        $compiled,
-        new Compiler()
-            ->load(fread($source, filesize($sourcePath)))
-            ->build()
-            ->generate()
-    );
+    $content = fread($source, filesize($sourcePath));
+
+    if ($content) {
+        fwrite(
+            $compiled,
+            new Compiler()
+                ->load($content)
+                ->build()
+                ->generate()
+        );
+    } else {
+        throw new \RuntimeException(sprintf('Failed to read source file: %s', $sourcePath));
+    }
 } catch (\Exception $exception) {
     echo 'Error: ' . $exception->getMessage() . \PHP_EOL;
     exit(1);
