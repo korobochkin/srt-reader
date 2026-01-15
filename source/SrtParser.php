@@ -17,8 +17,26 @@ class SrtParser
 
     private ParserInterface $parser;
 
+    /**
+    * @param array{
+    *     initial: array-key,
+    *     tokens: array{
+    *       default: array<non-empty-string, non-empty-string>
+    *     },
+    *     skip: list<non-empty-string>,
+    *     grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
+    *     reducers: array<non-empty-string, callable(\Phplrt\Parser\Context, array):mixed>,
+    *     transitions?: array<array-key, mixed>
+    * } $config
+    */
     public function __construct(array $config)
     {
+        \assert(isset($config['tokens']['default']), 'Missing "tokens.default" in config');
+        \assert(isset($config['skip']), 'Missing "skip" in config');
+        \assert(isset($config['grammar']), 'Missing "grammar" in config');
+        \assert(isset($config['initial']), 'Missing "initial" in config');
+        \assert(isset($config['reducers']), 'Missing "reducers" in config');
+
         $this->lexer = new Lexer(
             $config['tokens']['default'],
             $config['skip'],
