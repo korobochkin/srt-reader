@@ -9,18 +9,19 @@ use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 return new Config()
     ->setParallelConfig(ParallelConfigFactory::detect()) // @TODO 4.0 no need to call this manually
     ->setRiskyAllowed(true)
-    ->setRules([
+    ->setRules(array(
         '@auto' => true,
         '@auto:risky' => true,
         '@Symfony:risky' => true,
-    ])
+        'array_syntax' => array('syntax' => 'long'),
+    ))
     ->setCacheFile(__DIR__ . '/php-cs-fixer.cache')
     // 💡 by default, Fixer looks for `*.php` files excluding `./vendor/` - here, you can groom this config
     ->setFinder(
         new Finder()
             // 💡 root folder to check
             ->in(__DIR__ . '/../../')
-            ->exclude(['tmp'])
+            ->exclude(array('tmp'))
         // 💡 additional files, eg bin entry file
         // ->append([__DIR__.'/bin-entry-file'])
         // 💡 folders to exclude, if any
