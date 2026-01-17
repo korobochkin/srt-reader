@@ -24,7 +24,7 @@ php-cs-fixer-check:
 		--no-interaction
 
 php-syntax:
-	find . -type f -name "*.php" -path "./source/*" -print0 \
+	find . -type f -name "*.php" \( -path "./source/*" -o -path "./grammar/*" \) -print0 \
 	| xargs --null --verbose --max-procs=4 --max-args=1 php --syntax-check
 
 vendor: composer.json composer.lock
