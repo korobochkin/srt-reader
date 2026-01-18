@@ -1,0 +1,86 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+  workflow_call:
+
+concurrency:
+  group: '${{ github.ref }}'
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  php-syntax:
+    name: 'PHP ${{ matrix.php-versions }} Syntax Check'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions:
+          - '8.4'
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up the PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: none
+          tools: none
+          ini-file: development
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Run PHP Syntax Check
+        run: 'make php-syntax'
+
+  php-cs-fixer-check:
+    name: 'PHP Coding Standards'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up the PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          ini-file: development
+          extensions: filter, libxml, tokenizer, xmlreader, iconv, mbstring
+          tools: composer
+
+      - name: Detect Composer Cache Directory
+        id: composer-cache
+        run: 'echo "cache-files-dir=$(composer config cache-files-dir --global)" >> $GITHUB_OUTPUT'
+
+      - name: Composer Cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            ${{ steps.composer-cache.outputs.cache-files-dir }}
+            vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Composer Install
+        run: 'composer install --no-progress --classmap-authoritative'
+
+      - name: PHP Coding Standards Cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            development/php-cs-fixer/php-cs-fixer.cache
+          key: phpcs-${{ github.ref }}
+          restore-keys: |
+            phpcs-
+
+      - name: PHP Coding Standards
+        run: 'make php-cs-fixer-check'

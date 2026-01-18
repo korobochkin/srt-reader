@@ -1,0 +1,38 @@
+version: 2
+updates:
+  - package-ecosystem: composer
+    directories:
+      - /
+    versioning-strategy: increase
+    cooldown:
+      default-days: 10
+    open-pull-requests-limit: 10
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: docker
+    directories:
+      - /development/php
+    versioning-strategy: increase
+    cooldown:
+      default-days: 10
+    open-pull-requests-limit: 5
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: docker-compose
+    directories:
+      - /
+    versioning-strategy: increase
+    cooldown:
+      default-days: 10
+    open-pull-requests-limit: 5
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: github-actions
+    directories:
+      - /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

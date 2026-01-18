@@ -15,6 +15,18 @@ code:
 		--format=txt \
 		--no-interaction
 
+php-cs-fixer-check:
+	./vendor/bin/php-cs-fixer \
+		check \
+		--config="development/php-cs-fixer/php-cs-fixer.dist.php" \
+		--cache-file="development/php-cs-fixer/php-cs-fixer.cache" \
+		--format=@auto \
+		--no-interaction
+
+php-syntax:
+	find . -type f -name "*.php" \( -path "./source/*" -o -path "./grammar/*" \) -print0 \
+	| xargs --null --verbose --max-procs=4 --max-args=1 php --syntax-check
+
 vendor: composer.json composer.lock
 	composer install
 
@@ -33,6 +45,8 @@ git-diff:
 	up \
 	down \
 	code \
+	php-cs-fixer-check \
+	php-syntax \
 	grammar/srt.php \
 	grammar \
 	git-diff
