@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="1"
+    resolveFromConfigFile="false"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config ../../vendor/vimeo/psalm/config.xsd"
+    checkForThrowsDocblock="true"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+    cacheDirectory="development/psalm/.cache"
+>
+    <projectFiles>
+        <directory name="development/examples"/>
+        <directory name="development/grammar-generator"/>
+        <directory name="source"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+</psalm>

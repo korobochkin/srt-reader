@@ -27,6 +27,12 @@ php-syntax:
 	find . -type f -name "*.php" \( -path "./source/*" -o -path "./grammar/*" \) -print0 \
 	| xargs --null --verbose --max-procs=4 --max-args=1 php --syntax-check
 
+psalm:
+	./vendor/bin/psalm --config="development/psalm/psalm.xml"
+
+psalm-alter:
+	./vendor/bin/psalm --config="development/psalm/psalm.xml" --alter --issues=all
+
 vendor: composer.json composer.lock
 	composer install
 
@@ -47,6 +53,8 @@ git-diff:
 	code \
 	php-cs-fixer-check \
 	php-syntax \
+	psalm \
+	psalm-alter \
 	grammar/srt.php \
 	grammar \
 	git-diff
