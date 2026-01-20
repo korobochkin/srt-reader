@@ -7,6 +7,9 @@ namespace Korobochkin\SrtReader\Ast;
 use Phplrt\Lexer\Token\Composite;
 use Phplrt\Lexer\Token\Token;
 
+/**
+ * @psalm-api
+ */
 class SrtBlockNodeFactory
 {
     /**
