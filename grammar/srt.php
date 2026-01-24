@@ -6,16 +6,15 @@ declare(strict_types=1);
 
 /**
  * @var array{
- *     initial: array-key,
- *     tokens: array{
- *         default: array<non-empty-string, non-empty-string>,
- *         ...
- *     },
- *     skip: list<non-empty-string>,
- *     grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
- *     reducers: array<array-key, callable(\Phplrt\Parser\Context, mixed):mixed>,
- *     transitions?: array<array-key, mixed>
- * }
+ *      initial: array-key,
+ *      tokens: array{
+ *        default: array<non-empty-string, non-empty-string>
+ *      },
+ *      skip: list<non-empty-string>,
+ *      grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
+ *      reducers: array<non-empty-string, callable(\Phplrt\Parser\Context, array):mixed>,
+ *      transitions?: array<array-key, mixed>
+ *  }
  */
 return array(
     'initial' => 'Document',
