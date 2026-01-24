@@ -8,6 +8,7 @@ use Korobochkin\SrtReader\SrtGrammar;
 use Korobochkin\SrtReader\SrtParser;
 
 try {
+    $isError = false;
     //$content = fopen(__DIR__ . '/../../tmp/broken.srt', 'r');
     $content = fopen(__DIR__ . '/../../tmp/test.srt', 'r');
 
@@ -22,10 +23,13 @@ try {
         echo 'The block #' . $block->getIndex() . '. With the text: ' . $block->getText() . \PHP_EOL;
     }
 } catch (\Exception $exception) {
+    $isError = true;
     echo "Parse error: " . $exception->getMessage() . \PHP_EOL;
-    exit(1);
 } finally {
+    /** @psalm-suppress RedundantCondition */
     if (isset($content) && is_resource($content)) {
         fclose($content);
     }
 }
+
+exit($isError ? 1 : 0);
