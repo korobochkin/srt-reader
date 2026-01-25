@@ -62,7 +62,10 @@ class SrtBlockNode implements NodeInterface
 
     /**
      * @psalm-api
+     *
+     * @return \EmptyIterator
      */
+    #[\Override]
     public function getIterator(): \Traversable
     {
         return new \EmptyIterator();

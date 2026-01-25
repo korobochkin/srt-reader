@@ -10,9 +10,14 @@ use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Lexer\Lexer;
 use Phplrt\Parser\Parser;
 use Phplrt\Parser\ParserConfigsInterface;
+use Phplrt\Source\Source;
 
+/**
+ * @psalm-api
+ */
 class SrtParser
 {
+    /** @psalm-suppress UnusedProperty */
     private LexerInterface $lexer;
 
     private ParserInterface $parser;
@@ -57,6 +62,7 @@ class SrtParser
      * @throws \RuntimeException
      * @throws \Phplrt\Contracts\Parser\ParserExceptionInterface
      * @throws \Phplrt\Contracts\Parser\ParserRuntimeExceptionInterface
+     * @throws \Phplrt\Contracts\Source\SourceExceptionInterface
      */
     public function parse($source): SrtDocumentNode
     {
@@ -75,6 +81,10 @@ class SrtParser
             }
         }
 
-        return $this->parser->parse($source);
+        $result = $this->parser->parse(Source::new($source));
+
+        \assert($result instanceof SrtDocumentNode);
+
+        return $result;
     }
 }

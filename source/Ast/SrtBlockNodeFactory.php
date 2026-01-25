@@ -15,11 +15,12 @@ class SrtBlockNodeFactory
     /**
      * @param array{0: Token, 1: Composite, 2: Composite, 3: Token, ...<int, Token>} $children
      * @return SrtBlockNode
+     * @throws \InvalidArgumentException
      */
     public static function create(array $children): SrtBlockNode
     {
-        if (\count($children) < 4) {
-            throw new \InvalidArgumentException('Invalid $children structure: expected at least 3 elements but got ' . \count($children));
+        if (($childrenCounter = \count($children)) < 4) {
+            throw new \InvalidArgumentException('Invalid $children structure: expected at least 4 elements but got ' . $childrenCounter);
         }
         return new SrtBlockNode(
             (int) $children[0]->getValue(),
@@ -36,8 +37,9 @@ class SrtBlockNodeFactory
     }
 
     /**
-     * @param Composite<int, Token> $time
+     * @param Composite $time
      * @return int
+     * @psalm-suppress PossiblyNullReference 4 elements guaranteed by grammar
      */
     public static function createTime(Composite $time): int
     {
