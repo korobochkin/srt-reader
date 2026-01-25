@@ -30,7 +30,10 @@ class SrtParser
     *     },
     *     skip: list<non-empty-string>,
     *     grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
-    *     reducers: array<non-empty-string, callable(\Phplrt\Parser\Context, array):mixed>,
+    *     reducers: array{
+    *        Block: callable(\Phplrt\Parser\Context, array{0: \Phplrt\Lexer\Token\Token, 1: \Phplrt\Lexer\Token\Composite, 2: \Phplrt\Lexer\Token\Composite, 3: \Phplrt\Lexer\Token\Token, ...<int, \Phplrt\Lexer\Token\Token>}):\Korobochkin\SrtReader\Ast\SrtBlockNode,
+    *        Document: callable(\Phplrt\Parser\Context, list<\Korobochkin\SrtReader\Ast\SrtBlockNode>):\Korobochkin\SrtReader\Ast\SrtDocumentNode
+    *     },
     *     transitions?: array<array-key, mixed>
     * } $config
     */

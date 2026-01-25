@@ -18,7 +18,10 @@ class SrtGrammar
      *     },
      *     skip: list<non-empty-string>,
      *     grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
-     *     reducers: array<non-empty-string, callable(\Phplrt\Parser\Context, array):mixed>,
+     *     reducers: array{
+     *       Block: callable(\Phplrt\Parser\Context, array{0: \Phplrt\Lexer\Token\Token, 1: \Phplrt\Lexer\Token\Composite, 2: \Phplrt\Lexer\Token\Composite, 3: \Phplrt\Lexer\Token\Token, ...<int, \Phplrt\Lexer\Token\Token>}):\Korobochkin\SrtReader\Ast\SrtBlockNode,
+     *       Document: callable(\Phplrt\Parser\Context, list<\Korobochkin\SrtReader\Ast\SrtBlockNode>):\Korobochkin\SrtReader\Ast\SrtDocumentNode
+     *     },
      *     transitions?: array<array-key, mixed>
      * }
      */
@@ -60,8 +63,14 @@ class SrtGrammar
                 'Timecode' => new \Phplrt\Parser\Grammar\Concatenation(array(5, 6, 7)),
             ),
             'reducers' => array(
-                'Block' => static fn(\Phplrt\Parser\Context $ctx, $children) => \Korobochkin\SrtReader\Ast\SrtBlockNodeFactory::create($children),
-                'Document' => static fn(\Phplrt\Parser\Context $ctx, $children) => \Korobochkin\SrtReader\Ast\SrtDocumentNodeFactory::create($children),
+                /**
+                 * @param array{0: \Phplrt\Lexer\Token\Token, 1: \Phplrt\Lexer\Token\Composite, 2: \Phplrt\Lexer\Token\Composite, 3: \Phplrt\Lexer\Token\Token, ...<int, \Phplrt\Lexer\Token\Token>} $children
+                 */
+                'Block' => static fn(\Phplrt\Parser\Context $ctx, array $children) => \Korobochkin\SrtReader\Ast\SrtBlockNodeFactory::create($children),
+                /**
+                 * @param list<\Korobochkin\SrtReader\Ast\SrtBlockNode> $children
+                 */
+                'Document' => static fn(\Phplrt\Parser\Context $ctx, array $children) => \Korobochkin\SrtReader\Ast\SrtDocumentNodeFactory::create($children),
             ),
         );
     }
