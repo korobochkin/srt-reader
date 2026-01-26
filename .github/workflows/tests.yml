@@ -84,3 +84,47 @@ jobs:
 
       - name: PHP Coding Standards
         run: 'make php-cs-fixer-check'
+
+  psalm:
+    name: Psalm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up the PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          ini-file: development
+          extensions: filter, libxml, tokenizer, xmlreader, iconv, mbstring
+          tools: composer
+
+      - name: Detect Composer Cache Directory
+        id: composer-cache
+        run: 'echo "cache-files-dir=$(composer config cache-files-dir --global)" >> $GITHUB_OUTPUT'
+
+      - name: Composer Cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            ${{ steps.composer-cache.outputs.cache-files-dir }}
+            vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Composer Install
+        run: 'composer install --no-progress --classmap-authoritative'
+
+      - name: Psalm Cache
+        uses: actions/cache@v5
+        with:
+          path: development/psalm/.cache
+          key: psalm-cache
+          restore-keys: psalm-cache
+
+      - name: Psalm
+        run: 'make psalm'
