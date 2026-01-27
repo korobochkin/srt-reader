@@ -4,28 +4,29 @@ declare(strict_types=1);
 
 namespace Korobochkin\SrtReader;
 
+/**
+ * @psalm-api
+ */
 class SrtGrammar
 {
     /**
      * This is a manual copy of the grammar/srt.php file.
-     *
-     * @return array
+     * @return array{
+     *     initial: array-key,
+     *     tokens: array{
+     *       default: array<non-empty-string, non-empty-string>
+     *     },
+     *     skip: list<non-empty-string>,
+     *     grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
+     *     reducers: array{
+     *       Block: callable(\Phplrt\Parser\Context, array{0: \Phplrt\Lexer\Token\Token, 1: \Phplrt\Lexer\Token\Composite, 2: \Phplrt\Lexer\Token\Composite, 3: \Phplrt\Lexer\Token\Token, ...<int, \Phplrt\Lexer\Token\Token>}):\Korobochkin\SrtReader\Ast\SrtBlockNode,
+     *       Document: callable(\Phplrt\Parser\Context, list<\Korobochkin\SrtReader\Ast\SrtBlockNode>):\Korobochkin\SrtReader\Ast\SrtDocumentNode
+     *     },
+     *     transitions?: array<array-key, mixed>
+     * }
      */
     public static function getGrammar(): array
     {
-        /**
-         * @var array{
-         *     initial: array-key,
-         *     tokens: array{
-         *         default: array<non-empty-string, non-empty-string>,
-         *         ...
-         *     },
-         *     skip: list<non-empty-string>,
-         *     grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
-         *     reducers: array<array-key, callable(\Phplrt\Parser\Context, mixed):mixed>,
-         *     transitions?: array<array-key, mixed>
-         * }
-         */
         return array(
             'initial' => 'Document',
             'tokens' => array(
@@ -62,8 +63,14 @@ class SrtGrammar
                 'Timecode' => new \Phplrt\Parser\Grammar\Concatenation(array(5, 6, 7)),
             ),
             'reducers' => array(
-                'Block' => static fn(\Phplrt\Parser\Context $ctx, $children) => \Korobochkin\SrtReader\Ast\SrtBlockNodeFactory::create($children),
-                'Document' => static fn(\Phplrt\Parser\Context $ctx, $children) => \Korobochkin\SrtReader\Ast\SrtDocumentNodeFactory::create($children),
+                /**
+                 * @param array{0: \Phplrt\Lexer\Token\Token, 1: \Phplrt\Lexer\Token\Composite, 2: \Phplrt\Lexer\Token\Composite, 3: \Phplrt\Lexer\Token\Token, ...<int, \Phplrt\Lexer\Token\Token>} $children
+                 */
+                'Block' => static fn(\Phplrt\Parser\Context $ctx, array $children) => \Korobochkin\SrtReader\Ast\SrtBlockNodeFactory::create($children),
+                /**
+                 * @param list<\Korobochkin\SrtReader\Ast\SrtBlockNode> $children
+                 */
+                'Document' => static fn(\Phplrt\Parser\Context $ctx, array $children) => \Korobochkin\SrtReader\Ast\SrtDocumentNodeFactory::create($children),
             ),
         );
     }

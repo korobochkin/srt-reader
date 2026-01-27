@@ -10,9 +10,14 @@ use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Lexer\Lexer;
 use Phplrt\Parser\Parser;
 use Phplrt\Parser\ParserConfigsInterface;
+use Phplrt\Source\Source;
 
+/**
+ * @psalm-api
+ */
 class SrtParser
 {
+    /** @psalm-suppress UnusedProperty */
     private LexerInterface $lexer;
 
     private ParserInterface $parser;
@@ -25,7 +30,10 @@ class SrtParser
     *     },
     *     skip: list<non-empty-string>,
     *     grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
-    *     reducers: array<non-empty-string, callable(\Phplrt\Parser\Context, array):mixed>,
+    *     reducers: array{
+    *        Block: callable(\Phplrt\Parser\Context, array{0: \Phplrt\Lexer\Token\Token, 1: \Phplrt\Lexer\Token\Composite, 2: \Phplrt\Lexer\Token\Composite, 3: \Phplrt\Lexer\Token\Token, ...<int, \Phplrt\Lexer\Token\Token>}):\Korobochkin\SrtReader\Ast\SrtBlockNode,
+    *        Document: callable(\Phplrt\Parser\Context, list<\Korobochkin\SrtReader\Ast\SrtBlockNode>):\Korobochkin\SrtReader\Ast\SrtDocumentNode
+    *     },
     *     transitions?: array<array-key, mixed>
     * } $config
     */
@@ -57,6 +65,7 @@ class SrtParser
      * @throws \RuntimeException
      * @throws \Phplrt\Contracts\Parser\ParserExceptionInterface
      * @throws \Phplrt\Contracts\Parser\ParserRuntimeExceptionInterface
+     * @throws \Phplrt\Contracts\Source\SourceExceptionInterface
      */
     public function parse($source): SrtDocumentNode
     {
@@ -75,6 +84,10 @@ class SrtParser
             }
         }
 
-        return $this->parser->parse($source);
+        $result = $this->parser->parse(Source::new($source));
+
+        \assert($result instanceof SrtDocumentNode);
+
+        return $result;
     }
 }

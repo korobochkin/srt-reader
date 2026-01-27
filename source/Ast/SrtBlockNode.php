@@ -6,6 +6,9 @@ namespace Korobochkin\SrtReader\Ast;
 
 use Phplrt\Contracts\Ast\NodeInterface;
 
+/**
+ * @psalm-api
+ */
 class SrtBlockNode implements NodeInterface
 {
     private readonly int $index;
@@ -25,26 +28,44 @@ class SrtBlockNode implements NodeInterface
         $this->text = $text;
     }
 
+    /**
+     * @psalm-api
+     */
     public function getIndex(): int
     {
         return $this->index;
     }
 
+    /**
+     * @psalm-api
+     */
     public function getStartTime(): int
     {
         return $this->startTime;
     }
 
+    /**
+     * @psalm-api
+     */
     public function getEndTime(): int
     {
         return $this->endTime;
     }
 
+    /**
+     * @psalm-api
+     */
     public function getText(): string
     {
         return $this->text;
     }
 
+    /**
+     * @psalm-api
+     *
+     * @return \EmptyIterator
+     */
+    #[\Override]
     public function getIterator(): \Traversable
     {
         return new \EmptyIterator();
