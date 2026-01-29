@@ -14,8 +14,10 @@
         <directory name="development/examples"/>
         <directory name="development/grammar-generator"/>
         <directory name="source"/>
+        <directory name="tests"/>
         <ignoreFiles>
             <directory name="vendor"/>
+            <directory name="tests/integration/.phpunit.cache"/>
         </ignoreFiles>
     </projectFiles>
 </psalm>
