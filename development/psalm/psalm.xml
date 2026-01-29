@@ -20,4 +20,7 @@
             <directory name="tests/integration/.phpunit.cache"/>
         </ignoreFiles>
     </projectFiles>
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
 </psalm>
