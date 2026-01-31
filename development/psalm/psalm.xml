@@ -17,7 +17,7 @@
         <directory name="tests"/>
         <ignoreFiles>
             <directory name="vendor"/>
-            <directory name="tests/integration/.phpunit.cache"/>
+            <directory name="tests/integration/.cache"/>
         </ignoreFiles>
     </projectFiles>
     <plugins>
