@@ -29,7 +29,7 @@ class SrtBlockNodeFactory
             implode(
                 ' ',
                 array_map(
-                    fn(Token $token) => trim($token->getValue()),
+                    static fn(Token $token) => trim($token->getValue()),
                     \array_slice($children, 3),
                 ),
             ),
