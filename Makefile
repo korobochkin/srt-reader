@@ -41,6 +41,9 @@ grammar/srt.php: grammar/srt.pp vendor
 
 grammar: grammar/srt.php code
 
+tests-integration:
+	./vendor/bin/phpunit --no-progress --config=tests/integration/phpunit.xml --testsuite=integration
+
 git-diff:
 	mkdir -p tmp
 	rm -f tmp/diff.txt
@@ -57,4 +60,5 @@ git-diff:
 	psalm-alter \
 	grammar/srt.php \
 	grammar \
+	tests-integration \
 	git-diff

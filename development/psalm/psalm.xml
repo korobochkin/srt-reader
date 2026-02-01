@@ -14,8 +14,13 @@
         <directory name="development/examples"/>
         <directory name="development/grammar-generator"/>
         <directory name="source"/>
+        <directory name="tests"/>
         <ignoreFiles>
             <directory name="vendor"/>
+            <directory name="tests/integration/.cache"/>
         </ignoreFiles>
     </projectFiles>
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
 </psalm>
