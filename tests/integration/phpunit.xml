@@ -16,7 +16,7 @@
 
     <source>
         <include>
-            <directory>source</directory>
+            <directory>../../source</directory>
         </include>
     </source>
 </phpunit>

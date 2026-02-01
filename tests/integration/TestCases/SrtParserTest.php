@@ -41,13 +41,9 @@ final class SrtParserTest extends AbstractSrtParserTest
     #[Attributes\DataProviderExternal(SrtDataInvalidProvider::class, 'getInvalid')]
     public function testInvalidParse(string $content, array $expected): void
     {
-        try {
-            $this->parser->parse($content);
-            static::fail('Expected exception was not thrown');
-        } catch (\Throwable $exception) {
-            static::assertInstanceOf($expected[0], $exception);
-            static::assertStringStartsWith($expected[1], $exception->getMessage());
-            static::assertSame($expected[2], $exception->getCode());
-        }
+        self::expectException($expected[0]);
+        self::expectExceptionMessageMatches('/^' . preg_quote($expected[1], '/') . '/');
+        self::expectExceptionCode($expected[2]);
+        $this->parser->parse($content);
     }
 }
