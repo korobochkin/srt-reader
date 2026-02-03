@@ -14,6 +14,7 @@ return new Config()
         '@auto:risky' => true,
         '@Symfony:risky' => true,
         'array_syntax' => array('syntax' => 'long'),
+        'self_static_accessor' => true,
     ))
     ->setCacheFile(__DIR__ . '/php-cs-fixer.cache')
     // 💡 by default, Fixer looks for `*.php` files excluding `./vendor/` - here, you can groom this config
