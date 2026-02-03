@@ -25,7 +25,7 @@ final class SrtParserTest extends AbstractSrtParserTest
     #[Attributes\DataProviderExternal(SrtDataValidProvider::class, 'getValid')]
     public function testValidParse(string $content, SrtDocumentNode $expected): void
     {
-        static::assertEquals($expected, $this->parser->parse($content));
+        self::assertEquals($expected, $this->parser->parse($content));
     }
 
     /**
