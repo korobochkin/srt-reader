@@ -10,7 +10,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Korobochkin\\SrtReader\\Tests\\Integration\\": "tests/integration"
+            "Korobochkin\\SrtReader\\Tests\\Integration\\": "tests/integration",
+            "Korobochkin\\SrtReader\\Tests\\Unit\\": "tests/unit"
         }
     },
     "authors": [

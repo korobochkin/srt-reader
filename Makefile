@@ -41,6 +41,9 @@ grammar/srt.php: grammar/srt.pp vendor
 
 grammar: grammar/srt.php code
 
+tests-unit:
+	./vendor/bin/phpunit --no-progress --config=tests/unit/phpunit.xml --testsuite=unit
+
 tests-integration:
 	./vendor/bin/phpunit --no-progress --config=tests/integration/phpunit.xml --testsuite=integration
 
