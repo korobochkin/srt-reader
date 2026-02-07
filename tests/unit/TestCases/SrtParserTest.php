@@ -171,19 +171,26 @@ final class SrtParserTest extends TestCase
      */
     public function testParseFromStreamResource(): void
     {
-        $srt = "1\n00:00:00,000 --> 00:00:01,000\nFrom stream\n";
-        $stream = fopen('php://memory', 'r+');
-        self::assertIsResource($stream);
-        fwrite($stream, $srt);
-        rewind($stream);
+        try {
+            $srt = "1\n00:00:00,000 --> 00:00:01,000\nFrom stream\n";
+            $stream = fopen('php://memory', 'r+');
+            self::assertIsResource($stream);
+            fwrite($stream, $srt);
+            rewind($stream);
 
-        $result = $this->parser->parse($stream);
+            $result = $this->parser->parse($stream);
 
-        self::assertSame(1, $result->count());
-        $blocks = iterator_to_array($result);
-        self::assertSame('From stream', $blocks[0]->getText());
-
-        fclose($stream);
+            self::assertSame(1, $result->count());
+            $blocks = iterator_to_array($result);
+            self::assertSame('From stream', $blocks[0]->getText());
+        } finally {
+            /**
+             * @psalm-suppress RedundantCondition
+             */
+            if (isset($stream) && \is_resource($stream)) {
+                fclose($stream);
+            }
+        }
     }
 
     /**
@@ -196,14 +203,21 @@ final class SrtParserTest extends TestCase
      */
     public function testParseFromEmptyStream(): void
     {
-        $stream = fopen('php://memory', 'r+');
-        self::assertIsResource($stream);
+        try {
+            $stream = fopen('php://memory', 'r+');
+            self::assertIsResource($stream);
 
-        $result = $this->parser->parse($stream);
+            $result = $this->parser->parse($stream);
 
-        self::assertSame(0, $result->count());
-
-        fclose($stream);
+            self::assertSame(0, $result->count());
+        } finally {
+            /**
+             * @psalm-suppress RedundantConditionGivenDocblockType
+             */
+            if (isset($stream) && \is_resource($stream)) {
+                fclose($stream);
+            }
+        }
     }
 
     /**

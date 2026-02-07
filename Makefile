@@ -63,5 +63,6 @@ git-diff:
 	psalm-alter \
 	grammar/srt.php \
 	grammar \
+	tests-unit \
 	tests-integration \
 	git-diff
