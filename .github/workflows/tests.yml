@@ -71,7 +71,7 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Composer Install
-        run: 'composer install --no-progress --classmap-authoritative'
+        run: 'make vendor'
 
       - name: PHP Coding Standards Cache
         uses: actions/cache@v5
@@ -117,7 +117,7 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Composer Install
-        run: 'composer install --no-progress --classmap-authoritative'
+        run: 'make vendor'
 
       - name: Psalm Cache
         uses: actions/cache@v5
@@ -161,7 +161,7 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Composer Install
-        run: 'composer install --no-progress --classmap-authoritative'
+        run: 'make vendor'
 
       - name: Tests Integration Cache
         uses: actions/cache@v5
@@ -205,7 +205,7 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Composer Install
-        run: 'composer install --no-progress --classmap-authoritative'
+        run: 'make vendor'
 
       - name: Tests Unit Cache
         uses: actions/cache@v5
