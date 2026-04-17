@@ -34,7 +34,7 @@ psalm-alter:
 	./vendor/bin/psalm --config="development/psalm/psalm.xml" --alter --issues=all
 
 vendor: composer.json composer.lock
-	composer install
+	composer install --no-scripts --no-interaction --no-progress --classmap-authoritative
 
 grammar/srt.php: grammar/srt.pp vendor
 	php ./development/grammar-generator/grammar-generator.php
