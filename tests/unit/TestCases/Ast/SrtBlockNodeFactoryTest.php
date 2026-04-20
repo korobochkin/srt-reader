@@ -174,8 +174,8 @@ final class SrtBlockNodeFactoryTest extends TestCase
      */
     public function testCreateThrowsExceptionForEmptyArray(): void
     {
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Invalid $children structure: expected at least 4 elements but got 0');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid $children structure: expected at least 4 elements but got 0');
 
         /** @psalm-suppress InvalidArgument Intentionally testing invalid input */
         SrtBlockNodeFactory::create(array());
@@ -195,8 +195,8 @@ final class SrtBlockNodeFactoryTest extends TestCase
             TimeCompositeFactory::createTimeComposite(0, 0, 0, 0),
         );
 
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Invalid $children structure: expected at least 4 elements but got 3');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid $children structure: expected at least 4 elements but got 3');
 
         /** @psalm-suppress InvalidArgument Intentionally testing invalid input */
         SrtBlockNodeFactory::create($children);

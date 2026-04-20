@@ -322,7 +322,7 @@ final class SrtParserTest extends TestCase
      */
     public function testParseThrowsExceptionForInvalidSrt(): void
     {
-        self::expectException(\Phplrt\Contracts\Parser\ParserExceptionInterface::class);
+        $this->expectException(\Phplrt\Contracts\Parser\ParserExceptionInterface::class);
 
         $this->parser->parse("invalid srt content without proper format");
     }

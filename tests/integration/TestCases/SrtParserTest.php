@@ -41,9 +41,9 @@ final class SrtParserTest extends AbstractSrtParserTest
     #[Attributes\DataProviderExternal(SrtDataInvalidProvider::class, 'getInvalid')]
     public function testInvalidParse(string $content, array $expected): void
     {
-        self::expectException($expected[0]);
-        self::expectExceptionMessageMatches('/^' . preg_quote($expected[1], '/') . '/');
-        self::expectExceptionCode($expected[2]);
+        $this->expectException($expected[0]);
+        $this->expectExceptionMessageMatches('/^' . preg_quote($expected[1], '/') . '/');
+        $this->expectExceptionCode($expected[2]);
         $this->parser->parse($content);
     }
 }
