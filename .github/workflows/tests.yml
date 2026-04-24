@@ -162,14 +162,20 @@ jobs:
           cleanup: true
 
       - name: Docker Compose Build
-        run: make build-tests-runner
+        run: make build-tests
+
+      - name: Docker Compose Up
+        run: make up-tests
+
+      - name: Composer Install
+        run: make exec-tests-vendor
 
       - name: Tests Integration
-        run: make run-tests-integration
+        run: make exec-tests-integration
 
       - name: Docker Compose Down
         if: always()
-        run: make down
+        run: make down-tests
 
   tests_unit:
     name: Tests Unit
