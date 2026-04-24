@@ -2,8 +2,8 @@
 services:
   tests-runner:
     build:
-      dockerfile: ./development/php/tests.Dockerfile
       context:  ./../
+      dockerfile: ./development/php/tests.Dockerfile
     tty: true
     volumes:
       - ./../:/root/app
