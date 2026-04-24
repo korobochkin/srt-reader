@@ -4,7 +4,6 @@ COPY --from=composer/composer:2.9-bin /composer /usr/bin/composer
 
 RUN apt-get update --quiet --assume-yes \
     && apt-get install --quiet --assume-yes --no-install-recommends --no-install-suggests unzip \
-    && apt-get clean \
-    && pecl install xdebug
+    && apt-get clean
 
 WORKDIR /root/app

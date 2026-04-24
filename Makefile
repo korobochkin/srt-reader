@@ -1,11 +1,19 @@
+SHELL := /bin/bash
+
 build:
-	docker compose build --quiet
+	docker compose --profile $(DOCKER_PROFILE_LOCAL_DEVELOPMENT) build --quiet
+
+build-tests-runner:
+	docker compose --profile $(DOCKER_PROFILE_TESTS_RUNNER) build --quiet
 
 up:
-	docker compose up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
+	docker compose --profile $(DOCKER_PROFILE_LOCAL_DEVELOPMENT) up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
+
+run-tests-integration:
+	docker compose run --rm --remove-orphans $(DOCKER_SERVICES_PHP_TESTS_RUNNER) make tests-integration
 
 down:
-	docker compose down --remove-orphans --volumes
+	docker compose --profile $(DOCKER_PROFILE_LOCAL_DEVELOPMENT) --profile $(DOCKER_PROFILE_TESTS_RUNNER) down --remove-orphans --volumes
 
 code:
 	./vendor/bin/php-cs-fixer \
@@ -41,10 +49,10 @@ grammar/srt.php: grammar/srt.pp vendor
 
 grammar: grammar/srt.php code
 
-tests-unit:
+tests-unit: vendor
 	./vendor/bin/phpunit --no-progress --config=tests/unit/phpunit.xml --testsuite=unit
 
-tests-integration:
+tests-integration: vendor
 	./vendor/bin/phpunit --no-progress --config=tests/integration/phpunit.xml --testsuite=integration
 
 git-diff:
@@ -54,7 +62,9 @@ git-diff:
 
 .PHONY: \
 	build \
+	build-tests-runner \
 	up \
+	run-tests-integration \
 	down \
 	code \
 	php-cs-fixer-check \

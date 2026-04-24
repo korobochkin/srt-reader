@@ -129,7 +129,7 @@ jobs:
       - name: Psalm
         run: 'make psalm'
 
-  tests_integration:
+  tests-integration:
     name: Tests Integration
     runs-on: ubuntu-latest
     permissions:
@@ -138,30 +138,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Set up the PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.4
-          ini-file: development
-          extensions: filter, libxml, tokenizer, xmlreader, iconv, mbstring
-          tools: composer
-
-      - name: Detect Composer Cache Directory
-        id: composer-cache
-        run: 'echo "cache-files-dir=$(composer config cache-files-dir --global)" >> $GITHUB_OUTPUT'
-
       - name: Composer Cache
         uses: actions/cache@v5
         with:
           path: |
-            ${{ steps.composer-cache.outputs.cache-files-dir }}
+            tmp/composer
             vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          key: tests-runner-composer-${{ hashFiles('composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-composer-
-
-      - name: Composer Install
-        run: 'make vendor'
+            tests-runner-composer-
 
       - name: Tests Integration Cache
         uses: actions/cache@v5
@@ -170,8 +155,20 @@ jobs:
           key: tests-integration-cache
           restore-keys: tests-integration-cache
 
+      - name: Docker Buildx
+        uses: docker/setup-buildx-action@v4
+        with:
+          cleanup: true
+
+      - name: Docker Compose Build
+        run: make build-tests-runner
+
       - name: Tests Integration
-        run: 'make tests-integration'
+        run: make run-tests-integration
+
+      - name: Docker Compose Down
+        if: always()
+        run: make down
 
   tests_unit:
     name: Tests Unit
