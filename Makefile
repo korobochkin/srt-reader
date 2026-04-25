@@ -1,11 +1,28 @@
+SHELL := /bin/bash
+
 build:
-	docker compose build --quiet
+	docker compose --file development/docker-compose.yml build --provenance=false --sbom=false
+
+bake-tests:
+	docker buildx bake --file=development/tests-docker-bake.json
 
 up:
-	docker compose up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
+	docker compose --file=development/docker-compose.yml up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
+
+up-tests:
+	docker compose --file=development/tests-docker-compose.yml up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
+
+exec-tests-vendor:
+	docker compose --file=development/tests-docker-compose.yml exec tests-runner make vendor
+
+exec-tests-integration:
+	docker compose --file=development/tests-docker-compose.yml exec tests-runner make tests-integration
 
 down:
-	docker compose down --remove-orphans --volumes
+	docker compose --file=development/docker-compose.yml down --remove-orphans --volumes
+
+down-tests:
+	docker compose --file=development/tests-docker-compose.yml down --remove-orphans --volumes
 
 code:
 	./vendor/bin/php-cs-fixer \
@@ -54,8 +71,13 @@ git-diff:
 
 .PHONY: \
 	build \
+	bake-tests \
 	up \
+	up-tests \
+	exec-tests-vendor \
+	exec-tests-integration \
 	down \
+	down-tests \
 	code \
 	php-cs-fixer-check \
 	php-syntax \
