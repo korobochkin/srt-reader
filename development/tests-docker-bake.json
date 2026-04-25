@@ -10,6 +10,9 @@
     "tests-runner": {
       "context": ".",
       "dockerfile": "./development/php/tests.Dockerfile",
+      "tags": [
+        "development-tests-runner:latest"
+      ],
       "cache-from": [
         {
           "type": "gha"
