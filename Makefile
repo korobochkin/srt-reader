@@ -1,10 +1,10 @@
 SHELL := /bin/bash
 
 build:
-	docker compose --file development/docker-compose.yml build --quiet
+	docker compose --file development/docker-compose.yml build --provenance=false --sbom=false
 
 build-tests:
-	docker compose --file development/tests-docker-compose.yml build --quiet
+	docker compose --file development/tests-docker-compose.yml build --build-arg="BUILD_CONTEXT=./" --provenance=false --sbom=false
 
 up:
 	docker compose --file=development/docker-compose.yml up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
