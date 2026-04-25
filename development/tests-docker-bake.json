@@ -33,6 +33,11 @@
           "type": "sbom",
           "disabled": true
         }
+      ],
+      "output": [
+        {
+          "type": "image"
+        }
       ]
     }
   }
