@@ -37,6 +37,9 @@
       "output": [
         {
           "type": "image"
+        },
+        {
+          "type": "docker"
         }
       ]
     }
