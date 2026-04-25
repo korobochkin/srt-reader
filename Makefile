@@ -3,8 +3,8 @@ SHELL := /bin/bash
 build:
 	docker compose --file development/docker-compose.yml build --provenance=false --sbom=false
 
-build-tests:
-	docker compose --file development/tests-docker-compose.yml build --build-arg="BUILD_CONTEXT=./" --provenance=false --sbom=false
+bake-tests:
+	docker buildx bake --file=development/tests-docker-bake.json
 
 up:
 	docker compose --file=development/docker-compose.yml up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
@@ -71,7 +71,7 @@ git-diff:
 
 .PHONY: \
 	build \
-	build-tests \
+	bake-tests \
 	up \
 	up-tests \
 	exec-tests-vendor \

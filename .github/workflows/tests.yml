@@ -169,9 +169,6 @@ jobs:
           files: development/tests-docker-bake.json
           source: ./
 
-      - name: Docker Image List
-        run: docker image ls --all
-
       - name: Docker Compose Up
         run: make up-tests
 
