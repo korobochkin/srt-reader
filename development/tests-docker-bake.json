@@ -24,11 +24,11 @@
       "attest": [
         {
           "type": "provenance",
-          "mode": false
+          "disabled": true
         },
         {
           "type": "sbom",
-          "mode": false
+          "disabled": true
         }
       ]
     }
