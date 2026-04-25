@@ -1,0 +1,36 @@
+{
+  "group": {
+    "default": {
+      "targets": [
+        "tests-runner"
+      ]
+    }
+  },
+  "target": {
+    "tests-runner": {
+      "context": ".",
+      "dockerfile": "./development/php/tests.Dockerfile",
+      "cache-from": [
+        {
+          "type": "gha"
+        }
+      ],
+      "cache-to": [
+        {
+          "type": "gha",
+          "mode": "max"
+        }
+      ],
+      "attest": [
+        {
+          "type": "provenance",
+          "mode": false
+        },
+        {
+          "type": "sbom",
+          "mode": false
+        }
+      ]
+    }
+  }
+}

@@ -166,16 +166,8 @@ jobs:
         uses: docker/bake-action@v7
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          files: development/tests-docker-compose.yml
-          pull: true
-          provenance: false
-          push: false
-          sbom: false
-          set: |
-            *.cache-to="type=gha,mode=max
-            *.cache-from="type=gha"
+          files: development/tests-docker-bake.json
           source: ./
-          vars: "BUILD_CONTEXT='./'"
 
       - name: Docker Compose Up
         run: make up-tests
