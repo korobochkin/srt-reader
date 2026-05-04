@@ -21,6 +21,9 @@ exec-tests-vendor:
 exec-tests-integration:
 	docker compose --file=development/tests-docker-compose.yml exec tests-runner make tests-integration
 
+exec-tests-unit:
+	docker compose --file=development/tests-docker-compose.yml exec tests-runner make tests-unit
+
 down:
 	docker compose --file=development/docker-compose.yml down --remove-orphans --volumes
 
@@ -80,6 +83,7 @@ git-diff:
 	up-tests \
 	exec-tests-vendor \
 	exec-tests-integration \
+	exec-tests-unit \
 	down \
 	down-tests \
 	code \
