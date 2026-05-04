@@ -3,8 +3,17 @@ services:
   tests-runner:
     build:
       dockerfile: ./development/php/Dockerfile
-      context: ./../
+      context: .
       target: base
+      provenance: false
+      sbom: false
+      x-bake:
+        output:
+          - type=docker
+      cache_from:
+        - type=gha
+      cache_to:
+        - type=gha,mode=max
     tty: true
     volumes:
       - ./../:/root/app

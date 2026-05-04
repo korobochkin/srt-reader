@@ -4,7 +4,10 @@ build:
 	docker compose --file development/docker-compose.yml build
 
 bake-tests:
-	docker buildx bake --file=development/tests-docker-bake.json
+	docker buildx bake --file=development/tests-docker-compose.yml
+
+bake-tests-print:
+	docker buildx bake --file=development/tests-docker-compose.yml --print
 
 up:
 	docker compose --file=development/docker-compose.yml up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
@@ -72,6 +75,7 @@ git-diff:
 .PHONY: \
 	build \
 	bake-tests \
+	bake-tests-print \
 	up \
 	up-tests \
 	exec-tests-vendor \
