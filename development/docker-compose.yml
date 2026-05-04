@@ -4,6 +4,9 @@ services:
     build:
       dockerfile: ./development/php/Dockerfile
       context: ./../
+      target: develop
+      provenance: false
+      sbom: false
     init: true
     tty: true
     volumes:

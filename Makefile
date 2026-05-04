@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 build:
-	docker compose --file development/docker-compose.yml build --provenance=false --sbom=false
+	docker compose --file development/docker-compose.yml build
 
 bake-tests:
 	docker buildx bake --file=development/tests-docker-bake.json
