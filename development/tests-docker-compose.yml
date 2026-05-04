@@ -5,8 +5,6 @@ services:
       dockerfile: ./development/php/Dockerfile
       context: .
       target: base
-      provenance: false
-      sbom: false
       x-bake:
         output:
           - type=docker

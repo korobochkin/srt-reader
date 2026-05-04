@@ -4,7 +4,7 @@ build:
 	docker compose --file development/docker-compose.yml build
 
 bake-tests:
-	docker buildx bake --file=development/tests-docker-compose.yml
+	docker buildx bake --file=development/tests-docker-bake.json
 
 bake-tests-print:
 	docker buildx bake --file=development/tests-docker-compose.yml --print

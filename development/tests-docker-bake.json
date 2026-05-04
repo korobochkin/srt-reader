@@ -1,0 +1,45 @@
+{
+  "group": {
+    "default": {
+      "targets": [
+        "tests-runner"
+      ]
+    }
+  },
+  "target": {
+    "tests-runner": {
+      "context": ".",
+      "dockerfile": "./development/php/Dockerfile",
+      "target": "base",
+      "tags": [
+        "development-tests-runner:latest"
+      ],
+      "cache-from": [
+        {
+          "type": "gha"
+        }
+      ],
+      "cache-to": [
+        {
+          "type": "gha",
+          "mode": "max"
+        }
+      ],
+      "attest": [
+        {
+          "type": "provenance",
+          "disabled": true
+        },
+        {
+          "type": "sbom",
+          "disabled": true
+        }
+      ],
+      "output": [
+        {
+          "type": "docker"
+        }
+      ]
+    }
+  }
+}

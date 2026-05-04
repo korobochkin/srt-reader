@@ -166,7 +166,7 @@ jobs:
         uses: docker/bake-action@v7
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          files: development/tests-docker-compose.yml
+          files: development/tests-docker-bake.json
           source: ./
 
       - name: Docker Compose Up
