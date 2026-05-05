@@ -9,7 +9,8 @@
   "target": {
     "tests-runner": {
       "context": ".",
-      "dockerfile": "./development/php/tests.Dockerfile",
+      "dockerfile": "./development/php/Dockerfile",
+      "target": "base",
       "tags": [
         "development-tests-runner:latest"
       ],

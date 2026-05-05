@@ -1,10 +1,13 @@
 SHELL := /bin/bash
 
 build:
-	docker compose --file development/docker-compose.yml build --provenance=false --sbom=false
+	docker compose --file development/docker-compose.yml build
 
 bake-tests:
 	docker buildx bake --file=development/tests-docker-bake.json
+
+bake-tests-print:
+	docker buildx bake --file=development/tests-docker-compose.yml --print
 
 up:
 	docker compose --file=development/docker-compose.yml up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
@@ -17,6 +20,9 @@ exec-tests-vendor:
 
 exec-tests-integration:
 	docker compose --file=development/tests-docker-compose.yml exec tests-runner make tests-integration
+
+exec-tests-unit:
+	docker compose --file=development/tests-docker-compose.yml exec tests-runner make tests-unit
 
 down:
 	docker compose --file=development/docker-compose.yml down --remove-orphans --volumes
@@ -72,10 +78,12 @@ git-diff:
 .PHONY: \
 	build \
 	bake-tests \
+	bake-tests-print \
 	up \
 	up-tests \
 	exec-tests-vendor \
 	exec-tests-integration \
+	exec-tests-unit \
 	down \
 	down-tests \
 	code \
