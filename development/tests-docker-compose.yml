@@ -12,6 +12,11 @@ services:
         - type=gha
       cache_to:
         - type=gha,mode=max
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges=true
+    init: true
     tty: true
     volumes:
       - ./../:/root/app
