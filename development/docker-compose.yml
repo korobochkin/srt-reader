@@ -7,6 +7,10 @@ services:
       target: develop
       provenance: false
       sbom: false
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges=true
     init: true
     tty: true
     volumes:
