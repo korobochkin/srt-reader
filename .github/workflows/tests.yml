@@ -162,7 +162,7 @@ jobs:
         with:
           cleanup: true
 
-      - name: Docker Build
+      - name: Docker Bake
         uses: docker/bake-action@v7
         with:
           builder: ${{ steps.buildx.outputs.name }}
@@ -214,7 +214,7 @@ jobs:
         with:
           cleanup: true
 
-      - name: Docker Build
+      - name: Docker Bake
         uses: docker/bake-action@v7
         with:
           builder: ${{ steps.buildx.outputs.name }}
