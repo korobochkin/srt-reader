@@ -60,6 +60,9 @@ psalm-alter:
 	./vendor/bin/psalm --config="development/psalm/psalm.xml" --alter --issues=all
 
 vendor: composer.json composer.lock
+	ls -alh
+	whoami
+	id
 	composer install --no-scripts --no-interaction --no-progress --classmap-authoritative
 
 grammar/srt.php: grammar/srt.pp vendor
