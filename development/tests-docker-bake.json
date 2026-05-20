@@ -12,7 +12,7 @@
       "dockerfile": "./development/php/Dockerfile",
       "target": "base",
       "tags": [
-        "development-tests-runner:latest"
+        "srt-reader-tests-runner:latest"
       ],
       "cache-from": [
         {
