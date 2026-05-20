@@ -22,3 +22,6 @@ services:
     volumes:
       - ./../:/root/app
       - ./../tmp/composer:/root/.composer
+    tmpfs:
+      - /tmp
+      - /run

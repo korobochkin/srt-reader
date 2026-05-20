@@ -17,6 +17,10 @@ services:
     tty: true
     volumes:
       - ./../:/root/app
-      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:read-only
+      - ./../tmp/composer:/root/.composer
+    tmpfs:
+      - /tmp
+      - /run
     ports:
       - '127.0.0.1:9009:9009'
