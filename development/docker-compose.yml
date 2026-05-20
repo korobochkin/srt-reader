@@ -6,6 +6,9 @@ services:
       dockerfile: ./development/php/Dockerfile
       context: ./../
       target: develop
+      args:
+        UID: 1001
+        GID: 1001
       provenance: false
       sbom: false
     cap_drop:

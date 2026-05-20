@@ -10,6 +10,10 @@
     "tests-runner": {
       "context": ".",
       "dockerfile": "./development/php/Dockerfile",
+      "args": {
+        "GID": "1001",
+        "UID": "1001"
+      },
       "target": "base",
       "tags": [
         "srt-reader-tests-runner:latest"

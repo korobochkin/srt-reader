@@ -6,6 +6,9 @@ services:
       dockerfile: ./development/php/Dockerfile
       context: .
       target: base
+      args:
+        UID: 1001
+        GID: 1001
       x-bake:
         output:
           - type=docker
@@ -20,6 +23,7 @@ services:
     read_only: true
     init: true
     tty: true
+    user: 1001:1001
     volumes:
       - ./../:/root/app
       - ./../tmp/composer:/root/.composer
