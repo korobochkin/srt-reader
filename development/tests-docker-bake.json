@@ -2,21 +2,21 @@
   "group": {
     "default": {
       "targets": [
-        "tests-runner"
+        "tests-runner-integration",
+        "tests-runner-unit"
       ]
     }
   },
   "target": {
-    "tests-runner": {
+    "tests-runner-integration": {
       "context": ".",
       "dockerfile": "./development/php/Dockerfile",
       "args": {
         "GID": "1001",
         "UID": "1001"
       },
-      "target": "base",
       "tags": [
-        "srt-reader-tests-runner:latest"
+        "srt-reader-tests-runner-integration:latest"
       ],
       "cache-from": [
         {
@@ -25,20 +25,39 @@
       ],
       "cache-to": [
         {
-          "type": "gha",
-          "mode": "max"
+          "mode": "max",
+          "type": "gha"
         }
       ],
-      "attest": [
+      "target": "tests-runner-integraion",
+      "output": [
         {
-          "type": "provenance",
-          "disabled": true
-        },
+          "type": "docker"
+        }
+      ]
+    },
+    "tests-runner-unit": {
+      "context": ".",
+      "dockerfile": "./development/php/Dockerfile",
+      "args": {
+        "GID": "1001",
+        "UID": "1001"
+      },
+      "tags": [
+        "srt-reader-tests-runner-unit:latest"
+      ],
+      "cache-from": [
         {
-          "type": "sbom",
-          "disabled": true
+          "type": "gha"
         }
       ],
+      "cache-to": [
+        {
+          "mode": "max",
+          "type": "gha"
+        }
+      ],
+      "target": "tests-runner-unit",
       "output": [
         {
           "type": "docker"

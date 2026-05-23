@@ -1,32 +1,49 @@
 ---
+
+x-php-build: &service-php-build
+  dockerfile: ./development/php/Dockerfile
+  context: .
+  target: base
+  args:
+    UID: 1001
+    GID: 1001
+  x-bake:
+    output:
+      - type=docker
+  cache_from:
+    - type=gha
+  cache_to:
+    - type=gha,mode=max
+
+x-php: &service-php
+  build:
+    <<: *service-php-build
+  cap_drop:
+    - ALL
+  security_opt:
+    - no-new-privileges=true
+  read_only: true
+  init: true
+  tty: true
+  user: 1001:1001
+  volumes:
+    - ./../source:/home/php/app/source
+    - ./../tests:/home/php/app/tests
+    - ./../Makefile:/home/php/app/Makefile:read-only
+  tmpfs:
+    - /tmp
+    - /run
+
 name: srt-reader
 services:
-  tests-runner:
+  tests-runner-integration:
+    <<: *service-php
     build:
-      dockerfile: ./development/php/Dockerfile
-      context: .
-      target: base
-      args:
-        UID: 1001
-        GID: 1001
-      x-bake:
-        output:
-          - type=docker
-      cache_from:
-        - type=gha
-      cache_to:
-        - type=gha,mode=max
-    cap_drop:
-      - ALL
-    security_opt:
-      - no-new-privileges=true
-    read_only: true
-    init: true
-    tty: true
-    user: 1001:1001
-    volumes:
-      - ./../:/root/app
-      - ./../tmp/composer:/root/.composer
-    tmpfs:
-      - /tmp
-      - /run
+      <<: *service-php-build
+      target: tests-runner-integraion
+
+  tests-runner-unit:
+    <<: *service-php
+    build:
+      <<: *service-php-build
+      target: tests-runner-unit

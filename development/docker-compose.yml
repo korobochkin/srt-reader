@@ -19,9 +19,9 @@ services:
     init: true
     tty: true
     volumes:
-      - ./../:/root/app
+      - ./../:/home/php/app
       - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:read-only
-      - ./../tmp/composer:/root/.composer
+      - ./../tmp/composer:/home/php/.composer
     tmpfs:
       - /tmp
       - /run
