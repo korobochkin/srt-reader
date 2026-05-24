@@ -41,9 +41,13 @@ services:
     build:
       <<: *service-php-build
       target: tests-runner-integraion
+      tags:
+        - srt-reader-tests-runner-integration:latest
 
   tests-runner-unit:
     <<: *service-php
     build:
       <<: *service-php-build
       target: tests-runner-unit
+      tags:
+        - srt-reader-tests-runner-unit:latest
