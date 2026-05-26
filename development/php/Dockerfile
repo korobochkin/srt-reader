@@ -31,7 +31,7 @@ WORKDIR /home/php/app
 
 COPY --from=dependencies /home/php/app/vendor /home/php/app/vendor
 
-FROM tests-runner AS tests-runner-integraion
+FROM tests-runner AS tests-runner-integration
 
 ENTRYPOINT ["make", "tests-integration"]
 

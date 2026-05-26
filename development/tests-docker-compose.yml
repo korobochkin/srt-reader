@@ -27,8 +27,8 @@ x-php: &service-php
   tty: true
   user: 1001:1001
   volumes:
-    - ./../source:/home/php/app/source
-    - ./../tests:/home/php/app/tests
+    - ./../source:/home/php/app/source:read-only
+    - ./../tests:/home/php/app/tests:read-only
     - ./../Makefile:/home/php/app/Makefile:read-only
   tmpfs:
     - /tmp
@@ -40,7 +40,7 @@ services:
     <<: *service-php
     build:
       <<: *service-php-build
-      target: tests-runner-integraion
+      target: tests-runner-integration
       tags:
         - srt-reader-tests-runner-integration:latest
 
