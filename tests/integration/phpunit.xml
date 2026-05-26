@@ -7,7 +7,9 @@
          executionOrder="depends,defects"
          beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
-         failOnWarning="true">
+         failOnWarning="true"
+         cacheResult="false"
+>
     <testsuites>
         <testsuite name="integration">
             <directory>TestCases</directory>

@@ -4,25 +4,54 @@ build:
 	docker compose --file development/docker-compose.yml build
 
 bake-tests:
-	docker buildx bake --file=development/tests-docker-bake.json
+	docker buildx bake --file=development/tests-docker-compose.yml
 
 bake-tests-print:
 	docker buildx bake --file=development/tests-docker-compose.yml --print
 
 up:
-	docker compose --file=development/docker-compose.yml up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
+	docker compose \
+		--file=development/docker-compose.yml \
+		up \
+		--detach \
+		--no-build \
+		--quiet-pull \
+		--remove-orphans \
+		--timeout=120 \
+		--wait \
+		--yes
 
-up-tests:
-	docker compose --file=development/tests-docker-compose.yml up --detach --no-build --quiet-pull --remove-orphans --timeout=120 --wait --yes
+up-tests-integration:
+	docker compose \
+		--file=development/tests-docker-compose.yml \
+		up \
+		--no-build \
+		--quiet-pull \
+		--remove-orphans \
+		--timeout=120 \
+		--wait-timeout=120 \
+		--yes \
+		--abort-on-container-failure \
+		--no-log-prefix \
+		--exit-code-from=tests-runner-integration \
+		--attach=tests-runner-integration \
+		tests-runner-integration
 
-exec-tests-vendor:
-	docker compose --file=development/tests-docker-compose.yml exec tests-runner make vendor
-
-exec-tests-integration:
-	docker compose --file=development/tests-docker-compose.yml exec tests-runner make tests-integration
-
-exec-tests-unit:
-	docker compose --file=development/tests-docker-compose.yml exec tests-runner make tests-unit
+up-tests-unit:
+	docker compose \
+		--file=development/tests-docker-compose.yml \
+		up \
+		--no-build \
+		--quiet-pull \
+		--remove-orphans \
+		--timeout=120 \
+		--wait-timeout=120 \
+		--yes \
+		--abort-on-container-failure \
+		--no-log-prefix \
+		--exit-code-from=tests-runner-unit \
+		--attach=tests-runner-unit \
+		tests-runner-unit
 
 stop:
 	docker compose --file=development/docker-compose.yml stop
@@ -83,10 +112,8 @@ git-diff:
 	bake-tests \
 	bake-tests-print \
 	up \
-	up-tests \
-	exec-tests-vendor \
-	exec-tests-integration \
-	exec-tests-unit \
+	up-tests-integration \
+	up-tests-unit \
 	stop \
 	down \
 	down-tests \

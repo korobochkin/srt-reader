@@ -139,16 +139,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Composer Cache
-        uses: actions/cache@v5
-        with:
-          path: |
-            tmp/composer
-            vendor
-          key: tests-runner-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: |
-            tests-runner-composer-
-
       - name: Tests Integration Cache
         uses: actions/cache@v5
         with:
@@ -166,17 +156,11 @@ jobs:
         uses: docker/bake-action@v7
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          files: development/tests-docker-bake.json
+          files: development/tests-docker-compose.yml
           source: ./
 
-      - name: Docker Compose Up
-        run: make up-tests
-
-      - name: Composer Install
-        run: make exec-tests-vendor
-
-      - name: Tests Integration
-        run: make exec-tests-integration
+      - name: Docker Compose Up. Tests Integration
+        run: make up-tests-integration
 
       - name: Docker Compose Down
         if: always()
@@ -190,16 +174,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-
-      - name: Composer Cache
-        uses: actions/cache@v5
-        with:
-          path: |
-            tmp/composer
-            vendor
-          key: tests-runner-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: |
-            tests-runner-composer-
 
       - name: Tests Unit Cache
         uses: actions/cache@v5
@@ -218,17 +192,11 @@ jobs:
         uses: docker/bake-action@v7
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          files: development/tests-docker-bake.json
+          files: development/tests-docker-compose.yml
           source: ./
 
-      - name: Docker Compose Up
-        run: make up-tests
-
-      - name: Composer Install
-        run: make exec-tests-vendor
-
-      - name: Tests Unit
-        run: make exec-tests-unit
+      - name: Docker Compose Up. Tests Unit
+        run: make up-tests-unit
 
       - name: Docker Compose Down
         if: always()

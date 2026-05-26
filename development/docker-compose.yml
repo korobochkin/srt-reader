@@ -6,16 +6,24 @@ services:
       dockerfile: ./development/php/Dockerfile
       context: ./../
       target: develop
+      args:
+        UID: 1001
+        GID: 1001
       provenance: false
       sbom: false
     cap_drop:
       - ALL
     security_opt:
       - no-new-privileges=true
+    read_only: true
     init: true
     tty: true
     volumes:
-      - ./../:/root/app
-      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+      - ./../:/home/php/app
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:read-only
+      - ./../tmp/composer:/home/php/.composer
+    tmpfs:
+      - /tmp
+      - /run
     ports:
       - '127.0.0.1:9009:9009'
