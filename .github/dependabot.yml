@@ -9,6 +9,8 @@ updates:
     open-pull-requests-limit: 10
     schedule:
       interval: weekly
+    assignees:
+      - korobochkin
 
   - package-ecosystem: docker
     directories:
@@ -18,15 +20,19 @@ updates:
     open-pull-requests-limit: 5
     schedule:
       interval: weekly
+    assignees:
+      - korobochkin
 
   - package-ecosystem: docker-compose
     directories:
-      - ./
+      - ./development
     cooldown:
       default-days: 10
     open-pull-requests-limit: 5
     schedule:
       interval: weekly
+    assignees:
+      - korobochkin
 
   - package-ecosystem: github-actions
     directories:
@@ -34,3 +40,5 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    assignees:
+      - korobochkin
