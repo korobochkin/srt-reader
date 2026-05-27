@@ -4,10 +4,10 @@ build:
 	docker compose --file development/docker-compose.yml build
 
 bake-tests:
-	docker buildx bake --file=development/tests-docker-compose.yml
+	docker buildx bake --file=development/docker-compose-tests.yml
 
 bake-tests-print:
-	docker buildx bake --file=development/tests-docker-compose.yml --print
+	docker buildx bake --file=development/docker-compose-tests.yml --print
 
 up:
 	docker compose \
@@ -23,7 +23,7 @@ up:
 
 up-tests-integration:
 	docker compose \
-		--file=development/tests-docker-compose.yml \
+		--file=development/docker-compose-tests.yml \
 		up \
 		--no-build \
 		--quiet-pull \
@@ -39,7 +39,7 @@ up-tests-integration:
 
 up-tests-unit:
 	docker compose \
-		--file=development/tests-docker-compose.yml \
+		--file=development/docker-compose-tests.yml \
 		up \
 		--no-build \
 		--quiet-pull \
@@ -60,7 +60,7 @@ down:
 	docker compose --file=development/docker-compose.yml down --remove-orphans --volumes
 
 down-tests:
-	docker compose --file=development/tests-docker-compose.yml down --remove-orphans --volumes
+	docker compose --file=development/docker-compose-tests.yml down --remove-orphans --volumes
 
 code:
 	./vendor/bin/php-cs-fixer \
