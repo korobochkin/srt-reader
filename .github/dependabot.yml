@@ -12,7 +12,7 @@ updates:
 
   - package-ecosystem: docker
     directories:
-      - ./development/php
+      - ./development/containers/php
     cooldown:
       default-days: 10
     open-pull-requests-limit: 5

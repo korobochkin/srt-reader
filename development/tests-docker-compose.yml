@@ -1,7 +1,7 @@
 ---
 
 x-php-build: &service-php-build
-  dockerfile: ./development/php/Dockerfile
+  dockerfile: ./development/containers/php/Dockerfile
   context: .
   target: base
   args:

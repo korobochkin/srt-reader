@@ -3,7 +3,7 @@ name: srt-reader
 services:
   php:
     build:
-      dockerfile: ./development/php/Dockerfile
+      dockerfile: ./development/containers/php/Dockerfile
       context: ./../
       target: develop
       args:
@@ -20,7 +20,7 @@ services:
     tty: true
     volumes:
       - ./../:/home/php/app
-      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:read-only
+      - ./containers/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:read-only
       - ./../tmp/composer:/home/php/.composer
     tmpfs:
       - /tmp
