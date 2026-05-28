@@ -4,7 +4,7 @@ ARG UID
 ARG GID
 
 RUN addgroup --gid=$GID php \
-    && adduser --uid=$UID --gid=$GID --shell=/bin/bash php
+    && adduser --uid=$UID --gid=$GID --shell=/bin/bash --comment "" --disabled-password php
 
 RUN apt-get update --quiet --assume-yes \
     && apt-get install --quiet --assume-yes --no-install-recommends --no-install-suggests unzip \
