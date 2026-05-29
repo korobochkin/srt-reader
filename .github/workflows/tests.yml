@@ -23,6 +23,7 @@ jobs:
       matrix:
         php-versions:
           - '8.4'
+          - '8.5'
     permissions:
       contents: read
     steps:
