@@ -1,10 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Tests Unit" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-    <CommandLine>
-      <PhpTestInterpreterSettings>
-        <option name="interpreterName" value="php_in_docker" />
-      </PhpTestInterpreterSettings>
-    </CommandLine>
+  <configuration default="false" name="TestsUnit" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
     <TestRunner configuration_file="$PROJECT_DIR$/tests/unit/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
     <method v="2" />
   </configuration>
