@@ -39,6 +39,10 @@ FROM tests-runner AS tests-runner-unit
 
 ENTRYPOINT ["make", "tests-unit"]
 
+FROM tests-runner AS psalm
+
+ENTRYPOINT ["make", "psalm"]
+
 FROM base AS develop
 
 RUN pecl install xdebug

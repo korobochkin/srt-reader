@@ -53,6 +53,22 @@ up-tests-unit:
 		--attach=tests-runner-unit \
 		tests-runner-unit
 
+up-psalm:
+	docker compose \
+		--file=development/docker-compose-tests.yml \
+		up \
+		--no-build \
+		--quiet-pull \
+		--remove-orphans \
+		--timeout=120 \
+		--wait-timeout=120 \
+		--yes \
+		--abort-on-container-failure \
+		--no-log-prefix \
+		--exit-code-from=psalm \
+		--attach=psalm \
+		psalm
+
 stop:
 	docker compose --file=development/docker-compose.yml stop
 
@@ -114,6 +130,7 @@ git-diff:
 	up \
 	up-tests-integration \
 	up-tests-unit \
+	up-psalm \
 	stop \
 	down \
 	down-tests \
