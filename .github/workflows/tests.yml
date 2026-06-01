@@ -152,6 +152,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           files: development/docker-compose-tests.yml
           source: ./
+          targets: tests-runner-integration
 
       - name: Docker Compose Up. Tests Integration
         run: make up-tests-integration
@@ -188,6 +189,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           files: development/docker-compose-tests.yml
           source: ./
+          targets: tests-runner-unit
 
       - name: Docker Compose Up. Tests Unit
         run: make up-tests-unit
