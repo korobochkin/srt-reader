@@ -65,3 +65,19 @@ services:
       - ./../source:/home/php/app/source:read-only
       - ./../tests:/home/php/app/tests:read-only
       - ./../Makefile:/home/php/app/Makefile:read-only
+
+  php-cs-fixer:
+    <<: *service-php
+    build:
+      <<: *service-php-build
+      target: php-cs-fixer
+      tags:
+        - srt-reader-php-cs-fixer:latest
+    volumes:
+      - ./../development:/home/php/app/development
+      - ./../grammar:/home/php/app/grammar:read-only
+      - ./../source:/home/php/app/source:read-only
+      - ./../tests:/home/php/app/tests:read-only
+      - ./../Makefile:/home/php/app/Makefile:read-only
+      - ./../composer.json:/home/php/app/composer.json:read-only
+      - ./../composer.lock:/home/php/app/composer.lock:read-only

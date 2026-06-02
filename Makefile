@@ -69,6 +69,22 @@ up-psalm:
 		--attach=psalm \
 		psalm
 
+up-php-cs-fixer:
+	docker compose \
+		--file=development/docker-compose-tests.yml \
+		up \
+		--no-build \
+		--quiet-pull \
+		--remove-orphans \
+		--timeout=120 \
+		--wait-timeout=120 \
+		--yes \
+		--abort-on-container-failure \
+		--no-log-prefix \
+		--exit-code-from=php-cs-fixer \
+		--attach=php-cs-fixer \
+		php-cs-fixer
+
 stop:
 	docker compose --file=development/docker-compose.yml stop
 
@@ -131,6 +147,7 @@ git-diff:
 	up-tests-integration \
 	up-tests-unit \
 	up-psalm \
+	up-php-cs-fixer \
 	stop \
 	down \
 	down-tests \
