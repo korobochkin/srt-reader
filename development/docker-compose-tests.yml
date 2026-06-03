@@ -73,6 +73,8 @@ services:
       target: php-cs-fixer
       tags:
         - srt-reader-php-cs-fixer:latest
+    environment:
+      GITHUB_ACTIONS: ${GITHUB_ACTIONS:-false}
     volumes:
       - ./../development:/home/php/app/development
       - ./../grammar:/home/php/app/grammar:read-only

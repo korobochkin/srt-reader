@@ -1,5 +1,11 @@
 SHELL := /bin/bash
 
+ifeq ($(GITHUB_ACTIONS),true)
+	PHP_CS_FIXER_SHOW_PROGRESS := none
+else
+	PHP_CS_FIXER_SHOW_PROGRESS := bar
+endif
+
 build:
 	docker compose --file development/docker-compose.yml build
 
@@ -108,7 +114,8 @@ php-cs-fixer-check:
 		--config="development/php-cs-fixer/php-cs-fixer.dist.php" \
 		--cache-file="development/php-cs-fixer/php-cs-fixer.cache" \
 		--format=@auto \
-		--no-interaction
+		--no-interaction \
+		--show-progress=$(PHP_CS_FIXER_SHOW_PROGRESS)
 
 php-syntax:
 	find . -type f -name "*.php" \( -path "./source/*" -o -path "./grammar/*" \) -print0 \
