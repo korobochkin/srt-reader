@@ -1,5 +1,11 @@
 SHELL := /bin/bash
 
+ifeq ($(GITHUB_ACTIONS),true)
+	PHP_CS_FIXER_SHOW_PROGRESS := none
+else
+	PHP_CS_FIXER_SHOW_PROGRESS := bar
+endif
+
 build:
 	docker compose --file development/docker-compose.yml build
 
@@ -69,6 +75,22 @@ up-psalm:
 		--attach=psalm \
 		psalm
 
+up-php-cs-fixer:
+	docker compose \
+		--file=development/docker-compose-tests.yml \
+		up \
+		--no-build \
+		--quiet-pull \
+		--remove-orphans \
+		--timeout=120 \
+		--wait-timeout=120 \
+		--yes \
+		--abort-on-container-failure \
+		--no-log-prefix \
+		--exit-code-from=php-cs-fixer \
+		--attach=php-cs-fixer \
+		php-cs-fixer
+
 stop:
 	docker compose --file=development/docker-compose.yml stop
 
@@ -92,7 +114,8 @@ php-cs-fixer-check:
 		--config="development/php-cs-fixer/php-cs-fixer.dist.php" \
 		--cache-file="development/php-cs-fixer/php-cs-fixer.cache" \
 		--format=@auto \
-		--no-interaction
+		--no-interaction \
+		--show-progress=$(PHP_CS_FIXER_SHOW_PROGRESS)
 
 php-syntax:
 	find . -type f -name "*.php" \( -path "./source/*" -o -path "./grammar/*" \) -print0 \
@@ -131,6 +154,7 @@ git-diff:
 	up-tests-integration \
 	up-tests-unit \
 	up-psalm \
+	up-php-cs-fixer \
 	stop \
 	down \
 	down-tests \

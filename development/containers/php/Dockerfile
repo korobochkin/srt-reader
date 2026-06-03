@@ -43,6 +43,10 @@ FROM tests-runner AS psalm
 
 ENTRYPOINT ["make", "psalm"]
 
+FROM tests-runner AS php-cs-fixer
+
+ENTRYPOINT ["make", "php-cs-fixer-check"]
+
 FROM base AS develop
 
 RUN pecl install xdebug
