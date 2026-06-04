@@ -27,7 +27,7 @@ up:
 		--wait \
 		--yes
 
-up-tests-integration:
+_up-%:
 	docker compose \
 		--file=development/docker-compose-tests.yml \
 		up \
@@ -39,57 +39,17 @@ up-tests-integration:
 		--yes \
 		--abort-on-container-failure \
 		--no-log-prefix \
-		--exit-code-from=tests-runner-integration \
-		--attach=tests-runner-integration \
-		tests-runner-integration
+		--exit-code-from=$* \
+		--attach=$* \
+		$*
 
-up-tests-unit:
-	docker compose \
-		--file=development/docker-compose-tests.yml \
-		up \
-		--no-build \
-		--quiet-pull \
-		--remove-orphans \
-		--timeout=120 \
-		--wait-timeout=120 \
-		--yes \
-		--abort-on-container-failure \
-		--no-log-prefix \
-		--exit-code-from=tests-runner-unit \
-		--attach=tests-runner-unit \
-		tests-runner-unit
+up-tests-integration: _up-tests-runner-integration
 
-up-psalm:
-	docker compose \
-		--file=development/docker-compose-tests.yml \
-		up \
-		--no-build \
-		--quiet-pull \
-		--remove-orphans \
-		--timeout=120 \
-		--wait-timeout=120 \
-		--yes \
-		--abort-on-container-failure \
-		--no-log-prefix \
-		--exit-code-from=psalm \
-		--attach=psalm \
-		psalm
+up-tests-unit: _up-tests-runner-unit
 
-up-php-cs-fixer:
-	docker compose \
-		--file=development/docker-compose-tests.yml \
-		up \
-		--no-build \
-		--quiet-pull \
-		--remove-orphans \
-		--timeout=120 \
-		--wait-timeout=120 \
-		--yes \
-		--abort-on-container-failure \
-		--no-log-prefix \
-		--exit-code-from=php-cs-fixer \
-		--attach=php-cs-fixer \
-		php-cs-fixer
+up-psalm: _up-psalm
+
+up-php-cs-fixer: _up-php-cs-fixer
 
 stop:
 	docker compose --file=development/docker-compose.yml stop
@@ -151,6 +111,7 @@ git-diff:
 	bake-tests \
 	bake-tests-print \
 	up \
+	_up-% \
 	up-tests-integration \
 	up-tests-unit \
 	up-psalm \
