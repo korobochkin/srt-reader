@@ -18,12 +18,21 @@ services:
     read_only: true
     init: true
     tty: true
+    configs:
+      - source: php_xdebug
+        target: /usr/local/etc/php/conf.d/xdebug.ini
+        uid: '1001'
+        gid: '1001'
+        mode: 0400
     volumes:
       - ./../:/home/php/app
-      - ./containers/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:read-only
       - ./../tmp/composer:/home/php/.composer
     tmpfs:
       - /tmp
       - /run
     ports:
       - '127.0.0.1:9009:9009'
+
+configs:
+  php_xdebug:
+    file: ./containers/php/xdebug.ini
