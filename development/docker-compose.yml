@@ -30,8 +30,6 @@ services:
     tmpfs:
       - /tmp
       - /run
-    ports:
-      - '127.0.0.1:9009:9009'
 
 configs:
   php_xdebug:
