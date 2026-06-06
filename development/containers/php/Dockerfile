@@ -1,4 +1,6 @@
-FROM php:8.5.6-cli-bookworm AS base
+FROM php:8.5.6-cli-bookworm AS php-base
+
+FROM php-base AS base
 
 ARG UID
 ARG GID
@@ -27,7 +29,7 @@ RUN \
     --mount=type=cache,id=composer,destination=/root/.composer \
     make vendor
 
-FROM php:8.5.6-cli-bookworm AS tests-runner
+FROM php-base AS tests-runner
 
 WORKDIR /home/php/app
 
