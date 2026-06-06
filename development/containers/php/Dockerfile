@@ -1,12 +1,18 @@
 FROM php:8.5.6-cli-bookworm AS php-base
 
-FROM php-base AS base
-
 ARG UID
 ARG GID
 
 RUN addgroup --gid=$GID php \
     && adduser --uid=$UID --gid=$GID --shell=/bin/bash --comment "" --disabled-password php
+
+USER $UID:$GID
+
+WORKDIR /home/php/app
+
+FROM php-base AS php-base-with-composer
+
+USER root
 
 RUN \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -16,9 +22,9 @@ RUN \
 
 COPY --from=composer/composer:2.9-bin --chmod=0555 /composer /usr/bin/composer
 
-WORKDIR /home/php/app
+FROM php-base-with-composer AS dependencies
 
-FROM base AS dependencies
+USER $UID:$GID
 
 RUN \
     --mount=type=bind,source=source,destination=./source \
@@ -26,12 +32,10 @@ RUN \
     --mount=type=bind,source=composer.json,destination=./composer.json \
     --mount=type=bind,source=composer.lock,destination=./composer.lock \
     --mount=type=bind,source=Makefile,destination=./Makefile \
-    --mount=type=cache,id=composer,destination=/root/.composer \
+    --mount=type=cache,id=composer,mode=0755,uid=$UID,gid=$GID,destination=/home/php/.composer \
     make vendor
 
 FROM php-base AS tests-runner
-
-WORKDIR /home/php/app
 
 COPY --from=dependencies /home/php/app/vendor /home/php/app/vendor
 
@@ -51,6 +55,8 @@ FROM tests-runner AS php-cs-fixer
 
 ENTRYPOINT ["make", "php-cs-fixer-check"]
 
-FROM base AS develop
+FROM php-base-with-composer AS develop
 
 RUN pecl install xdebug
+
+USER $UID:$GID
