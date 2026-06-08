@@ -1,4 +1,4 @@
-FROM php:8.5.6-cli-bookworm AS php-base
+FROM php:8.5.7-cli-bookworm AS php-base
 
 ARG UID
 ARG GID
