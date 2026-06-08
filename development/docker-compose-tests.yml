@@ -1,30 +1,25 @@
 ---
 
-x-php-build: &service-php-build
-  dockerfile: ./development/containers/php/Dockerfile
-  context: .
-  target: base
-  args:
-    UID: 1001
-    GID: 1001
-  x-bake:
-    output:
-      - type=docker
-  cache_from:
-    - type=gha
-  cache_to:
-    - type=gha,mode=max
-
 x-php: &service-php
-  build:
-    <<: *service-php-build
+  build: &service-php-build
+    dockerfile: ./development/containers/php/Dockerfile
+    context: .
+    target: base
+    args:
+      UID: 1001
+      GID: 1001
+    x-bake:
+      output:
+        - type=docker
+    cache_from:
+      - type=gha
+    cache_to:
+      - type=gha,mode=max
   cap_drop:
     - ALL
   security_opt:
     - no-new-privileges=true
   read_only: true
-  init: true
-  tty: true
   user: 1001:1001
   volumes:
     - ./../source:/home/php/app/source:read-only
