@@ -1,5 +1,7 @@
 FROM php:8.5.7-cli-bookworm AS php-base
 
+SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
+
 ARG UID
 ARG GID
 
