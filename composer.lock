@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb7080013587ea916257da7af742cb6d",
+    "content-hash": "28929c65a5594a02183980bd0071b7df",
     "packages": [
         {
             "name": "phplrt/phplrt",

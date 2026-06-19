@@ -31,6 +31,6 @@
         "phplrt/phplrt": "^3.7",
         "vimeo/psalm": "^6.16",
         "phpunit/phpunit": "^12.5",
-        "psalm/plugin-phpunit": "^0.19.5"
+        "psalm/plugin-phpunit": "^0.19.7"
     }
 }
