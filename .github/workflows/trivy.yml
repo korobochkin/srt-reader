@@ -12,12 +12,11 @@ concurrency:
 permissions: {}
 
 jobs:
-  trivy:
-    name: Trivy
+  build-images:
+    name: Build images
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -35,6 +34,13 @@ jobs:
           files: development/docker-compose-tests.yml
           source: ./
 
+  trivy:
+    name: Trivy
+    needs: build-images
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
       - name: Run Trivy
         uses: aquasecurity/trivy-action@v0.36.0
         with:
