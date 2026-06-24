@@ -1,0 +1,55 @@
+name: Trivy
+
+on:
+  schedule:
+    - cron: 0 0 * * 0
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_call:
+
+concurrency:
+  group: trivy
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  trivy:
+    name: Trivy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v4
+        with:
+          cleanup: true
+
+      - name: Docker Bake
+        uses: docker/bake-action@v7
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          files: development/docker-compose-tests.yml
+          source: ./
+          targets: tests-runner-integration
+
+      - name: Run Trivy
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: srt-reader-tests-runner-integration:latest
+          format: sarif
+          output: ${{ runner.temp }}/trivy-results--tests-runner-integration.sarif
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: ${{ runner.temp }}/trivy-results--tests-runner-integration.sarif
