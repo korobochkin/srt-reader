@@ -6,8 +6,8 @@ x-php: &service-php
     context: .
     target: base
     args:
-      UID: 1001
-      GID: 1001
+      UID: 82
+      GID: 82
     x-bake:
       output:
         - type=docker
@@ -20,7 +20,7 @@ x-php: &service-php
   security_opt:
     - no-new-privileges=true
   read_only: true
-  user: 1001:1001
+  user: 82:82
   volumes:
     - ./../source:/home/php/app/source:read-only
     - ./../tests:/home/php/app/tests:read-only

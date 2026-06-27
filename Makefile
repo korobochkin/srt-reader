@@ -1,4 +1,4 @@
-SHELL := /bin/bash
+SHELL := /bin/sh
 
 ifeq ($(GITHUB_ACTIONS),true)
 	PHP_CS_FIXER_SHOW_PROGRESS := none
