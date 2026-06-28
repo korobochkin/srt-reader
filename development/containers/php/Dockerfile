@@ -2,6 +2,12 @@ FROM php:8.5.7-cli-alpine AS php-base
 
 SHELL ["/bin/sh", "-euo", "pipefail", "-c"]
 
+RUN \
+    --mount=type=cache,target=/var/cache/apk,sharing=locked \
+    apk update --progress=no \
+    && apk upgrade --progress=no \
+    && apk add --progress=no make
+
 ARG UID
 ARG GID
 
@@ -15,9 +21,7 @@ USER root
 
 RUN \
     --mount=type=cache,target=/var/cache/apk,sharing=locked \
-    apk update --progress=no \
-    && apk upgrade --progress=no \
-    && apk add --progress=no unzip make
+    apk add --progress=no unzip
 
 COPY --from=composer/composer:2.10-bin --chmod=0555 /composer /usr/bin/composer
 
