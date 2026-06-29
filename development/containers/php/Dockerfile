@@ -2,6 +2,8 @@ FROM php:8.5.7-cli-alpine AS php-base
 
 SHELL ["/bin/sh", "-euo", "pipefail", "-c"]
 
+RUN chmod 777 /home/www-data
+
 RUN \
     --mount=type=cache,target=/var/cache/apk,sharing=locked \
     apk update --progress=no \
