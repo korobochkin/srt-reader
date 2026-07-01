@@ -2,8 +2,6 @@ FROM php:8.5.7-cli-alpine AS php-base
 
 SHELL ["/bin/sh", "-euo", "pipefail", "-c"]
 
-RUN chmod 777 /home/www-data
-
 RUN \
     --mount=type=cache,target=/var/cache/apk,sharing=locked \
     apk update --progress=no \
@@ -13,9 +11,13 @@ RUN \
 ARG UID
 ARG GID
 
+RUN \
+   addgroup -g $GID php \
+   && adduser -u $UID -G php -D -s /bin/sh php
+
 USER $UID:$GID
 
-WORKDIR /home/www-data/app
+WORKDIR /home/php/app
 
 FROM php-base AS php-base-with-composer
 
@@ -37,12 +39,12 @@ RUN \
     --mount=type=bind,source=composer.json,destination=./composer.json \
     --mount=type=bind,source=composer.lock,destination=./composer.lock \
     --mount=type=bind,source=Makefile,destination=./Makefile \
-    --mount=type=cache,id=composer,mode=0755,uid=$UID,gid=$GID,destination=/home/www-data/.composer \
+    --mount=type=cache,id=composer,mode=0755,uid=$UID,gid=$GID,destination=/home/php/.composer \
     make vendor
 
 FROM php-base AS tests-runner
 
-COPY --from=dependencies /home/www-data/app/vendor /home/www-data/app/vendor
+COPY --from=dependencies /home/php/app/vendor /home/php/app/vendor
 
 FROM tests-runner AS tests-runner-integration
 

@@ -7,8 +7,8 @@ services:
       context: ./../
       target: develop
       args:
-        UID: 82
-        GID: 82
+        UID: 1001
+        GID: 1001
       provenance: false
       sbom: false
     cap_drop:
@@ -21,12 +21,12 @@ services:
     configs:
       - source: php_xdebug
         target: /usr/local/etc/php/conf.d/xdebug.ini
-        uid: '82'
-        gid: '82'
+        uid: '1001'
+        gid: '1001'
         mode: 0400
     volumes:
-      - ./../:/home/www-data/app
-      - ./../tmp/composer:/home/www-data/.composer
+      - ./../:/home/php/app
+      - ./../tmp/composer:/home/php/.composer
     tmpfs:
       - /tmp
       - /run
