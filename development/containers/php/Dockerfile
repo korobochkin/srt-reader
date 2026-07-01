@@ -1,12 +1,19 @@
-FROM php:8.5.7-cli-bookworm AS php-base
+FROM php:8.5.7-cli-alpine AS php-base
 
-SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
+SHELL ["/bin/sh", "-euo", "pipefail", "-c"]
+
+RUN \
+    --mount=type=cache,target=/var/cache/apk,sharing=locked \
+    apk update --progress=no \
+    && apk upgrade --progress=no \
+    && apk add --progress=no make
 
 ARG UID
 ARG GID
 
-RUN addgroup --gid=$GID php \
-    && adduser --uid=$UID --gid=$GID --shell=/bin/bash --comment "" --disabled-password php
+RUN \
+   addgroup -g $GID php \
+   && adduser -u $UID -G php -D -s /bin/sh php
 
 USER $UID:$GID
 
@@ -17,10 +24,8 @@ FROM php-base AS php-base-with-composer
 USER root
 
 RUN \
-    --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
-    apt-get update --quiet --assume-yes \
-    && apt-get install --quiet --assume-yes --no-install-recommends --no-install-suggests unzip
+    --mount=type=cache,target=/var/cache/apk,sharing=locked \
+    apk add --progress=no unzip
 
 COPY --from=composer/composer:2.10-bin --chmod=0555 /composer /usr/bin/composer
 
@@ -59,6 +64,9 @@ ENTRYPOINT ["make", "php-cs-fixer-check"]
 
 FROM php-base-with-composer AS develop
 
-RUN pecl install xdebug
+RUN \
+    --mount=type=cache,target=/var/cache/apk,sharing=locked \
+    apk add --progress=no autoconf build-base linux-headers \
+    && pecl install xdebug
 
 USER $UID:$GID
