@@ -22,7 +22,7 @@ return new Config()
     ->setFinder(
         new Finder()
             // 💡 root folder to check
-            ->in(__DIR__ . '/../../')
+            ->in(dirname(__DIR__, 2))
             ->exclude(array('tmp', 'tests/integration/.cache'))
         // 💡 additional files, eg bin entry file
         // ->append([__DIR__.'/bin-entry-file'])
