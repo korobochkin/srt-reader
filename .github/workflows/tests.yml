@@ -4,20 +4,20 @@ on:
   pull_request:
   push:
     branches:
-      - 'main'
-      - 'develop'
+      - main
+      - develop
   workflow_dispatch:
   workflow_call:
 
 concurrency:
-  group: '${{ github.ref }}'
+  group: ${{ github.ref }}
   cancel-in-progress: true
 
 permissions: {}
 
 jobs:
   php-syntax:
-    name: 'PHP ${{ matrix.php-versions }} Syntax Check'
+    name: PHP ${{ matrix.php-versions }} Syntax Check
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -41,7 +41,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
 
       - name: Run PHP Syntax Check
-        run: 'make php-syntax'
+        run: make php-syntax
 
   php-cs-fixer-check:
     name: 'PHP Coding Standards'
