@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up the PHP
         uses: shivammathur/setup-php@v2
@@ -49,6 +51,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: PHP Coding Standards Cache
         uses: actions/cache@v6
@@ -88,6 +92,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Psalm Cache
         uses: actions/cache@v6
@@ -125,6 +131,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Tests Integration Cache
         uses: actions/cache@v6
@@ -162,6 +170,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Tests Unit Cache
         uses: actions/cache@v6
