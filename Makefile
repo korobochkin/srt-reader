@@ -85,6 +85,10 @@ php-syntax:
 	find . -type f -name "*.php" \( -path "./source/*" -o -path "./grammar/*" \) -print0 \
 	| xargs --null --verbose --max-procs=4 --max-args=1 php --syntax-check
 
+php-syntax-busybox:
+	find . -type f -name "*.php" \( -path "./source/*" -o -path "./grammar/*" \) -print0 \
+	| xargs -0 -t -P 4 -n 1 php --syntax-check
+
 psalm:
 	./vendor/bin/psalm --config="development/psalm/psalm.xml"
 
@@ -128,6 +132,7 @@ git-diff:
 	code \
 	php-cs-fixer-check \
 	php-syntax \
+	php-syntax-busybox \
 	psalm \
 	psalm-alter \
 	grammar/srt.php \
