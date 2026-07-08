@@ -43,6 +43,10 @@ _up-%:
 		--attach=$* \
 		$*
 
+up-php-8-4: _up-php-8-4
+
+up-php-8-5: _up-php-8-5
+
 up-tests-integration: _up-tests-runner-integration
 
 up-tests-unit: _up-tests-runner-unit
@@ -112,6 +116,8 @@ git-diff:
 	bake-tests-print \
 	up \
 	_up-% \
+	up-php-8-4 \
+	up-php-8-5 \
 	up-tests-integration \
 	up-tests-unit \
 	up-psalm \
