@@ -76,7 +76,7 @@ services:
       <<: *service-php-build
       tags:
         - srt-reader-php-8-5:latest
-    entrypoint: [ "make", "php-syntax-busybox" ]
+    entrypoint: ["make", "php-syntax-busybox"]
 
   tests-runner-integration:
     <<: *service-php
