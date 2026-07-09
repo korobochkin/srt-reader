@@ -1,10 +1,10 @@
 ---
 
-x-php: &service-php
-  build: &service-php-build
-    dockerfile: ./development/containers/php/Dockerfile
+x-php-8-4: &service-php-8-4
+  build: &service-php-8-4-build
+    dockerfile: ./development/containers/php/php-8-4.Dockerfile
     context: .
-    target: base
+    target: php-base
     args:
       UID: 1001
       GID: 1001
@@ -22,6 +22,37 @@ x-php: &service-php
   read_only: true
   user: 1001:1001
   volumes:
+    - ./../grammar:/home/php/app/grammar:read-only
+    - ./../source:/home/php/app/source:read-only
+    - ./../tests:/home/php/app/tests:read-only
+    - ./../Makefile:/home/php/app/Makefile:read-only
+  tmpfs:
+    - /tmp
+    - /run
+
+x-php: &service-php
+  build: &service-php-build
+    dockerfile: ./development/containers/php/Dockerfile
+    context: .
+    target: php-base
+    args:
+      UID: 1001
+      GID: 1001
+    x-bake:
+      output:
+        - type=docker
+    cache_from:
+      - type=gha
+    cache_to:
+      - type=gha,mode=max
+  cap_drop:
+    - ALL
+  security_opt:
+    - no-new-privileges=true
+  read_only: true
+  user: 1001:1001
+  volumes:
+    - ./../grammar:/home/php/app/grammar:read-only
     - ./../source:/home/php/app/source:read-only
     - ./../tests:/home/php/app/tests:read-only
     - ./../Makefile:/home/php/app/Makefile:read-only
@@ -31,6 +62,22 @@ x-php: &service-php
 
 name: srt-reader
 services:
+  php-8-4:
+    <<: *service-php-8-4
+    build:
+      <<: *service-php-8-4-build
+      tags:
+        - srt-reader-php-8-4:latest
+    entrypoint: ["make", "php-syntax-busybox"]
+
+  php-8-5:
+    <<: *service-php
+    build:
+      <<: *service-php-build
+      tags:
+        - srt-reader-php-8-5:latest
+    entrypoint: [ "make", "php-syntax-busybox" ]
+
   tests-runner-integration:
     <<: *service-php
     build:
