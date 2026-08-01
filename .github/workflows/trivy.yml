@@ -51,6 +51,6 @@ jobs:
           output: ${{ runner.temp }}/trivy-results--tests-runner-integration.sarif
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v4.37.3
         with:
           sarif_file: ${{ runner.temp }}/trivy-results--tests-runner-integration.sarif
