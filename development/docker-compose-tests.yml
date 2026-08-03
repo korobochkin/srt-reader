@@ -2,7 +2,7 @@
 
 x-php-8-4: &service-php-8-4
   build: &service-php-8-4-build
-    dockerfile: ./development/containers/php/php-8-4.Dockerfile
+    dockerfile: ./development/containers/php-8.4/Dockerfile
     context: .
     target: php-base
     args:
