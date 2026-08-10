@@ -22,8 +22,8 @@ jobs:
     strategy:
       matrix:
         php-versions:
-          - 'php-8-4'
-          - 'php-8-5'
+          - '8.4'
+          - '8.5'
     permissions:
       contents: read
     timeout-minutes: 2
@@ -45,10 +45,10 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           files: development/docker-compose-tests.yml
           source: ./
-          targets: ${{ matrix.php-versions }}
+          targets: php-syntax-php-${{ matrix.php-versions }}
 
       - name: Docker Compose Up. PHP Syntax Check
-        run: make up-${{ matrix.php-versions }}
+        run: make up-php-syntax-php-${{ matrix.php-versions }}
 
       - name: Docker Compose Down
         if: always()

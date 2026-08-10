@@ -68,20 +68,20 @@ x-php: &service-php
 
 name: srt-reader
 services:
-  php-8-4:
+  php-syntax-php-8.4:
     <<: *service-php-8-4
     build:
       <<: *service-php-8-4-build
       tags:
-        - srt-reader-php-8-4:latest
+        - srt-reader-php-syntax-php-8.4:latest
     entrypoint: ["make", "php-syntax-busybox"]
 
-  php-8-5:
+  php-syntax-php-8.5:
     <<: *service-php
     build:
       <<: *service-php-build
       tags:
-        - srt-reader-php-8-5:latest
+        - srt-reader-php-syntax-php-8.5:latest
     entrypoint: ["make", "php-syntax-busybox"]
 
   tests-runner-integration:

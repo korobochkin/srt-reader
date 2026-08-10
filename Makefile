@@ -43,9 +43,9 @@ _up-%:
 		--attach=$* \
 		$*
 
-up-php-8-4: _up-php-8-4
+up-php-syntax-php-8.4: _up-php-syntax-php-8.4
 
-up-php-8-5: _up-php-8-5
+up-php-syntax-php-8.5: _up-php-syntax-php-8.5
 
 up-tests-integration: _up-tests-runner-integration
 
@@ -120,8 +120,8 @@ git-diff:
 	bake-tests-print \
 	up \
 	_up-% \
-	up-php-8-4 \
-	up-php-8-5 \
+	up-php-syntax-php-8.4 \
+	up-php-syntax-php-8.5 \
 	up-tests-integration \
 	up-tests-unit \
 	up-psalm \
