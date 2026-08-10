@@ -2,7 +2,7 @@
 
 x-php-8-4: &service-php-8-4
   build: &service-php-8-4-build
-    dockerfile: ./development/containers/php/php-8-4.Dockerfile
+    dockerfile: ./development/containers/php-8.4/Dockerfile
     context: .
     target: php-base
     args:
@@ -51,6 +51,12 @@ x-php: &service-php
     - no-new-privileges=true
   read_only: true
   user: 1001:1001
+  configs:
+    - source: php
+      target: /usr/local/etc/php/php.ini
+      uid: '1001'
+      gid: '1001'
+      mode: 0400
   volumes:
     - ./../grammar:/home/php/app/grammar:read-only
     - ./../source:/home/php/app/source:read-only
@@ -62,20 +68,20 @@ x-php: &service-php
 
 name: srt-reader
 services:
-  php-8-4:
+  php-syntax-php-8.4:
     <<: *service-php-8-4
     build:
       <<: *service-php-8-4-build
       tags:
-        - srt-reader-php-8-4:latest
+        - srt-reader-php-syntax-php-8.4:latest
     entrypoint: ["make", "php-syntax-busybox"]
 
-  php-8-5:
+  php-syntax-php-8.5:
     <<: *service-php
     build:
       <<: *service-php-build
       tags:
-        - srt-reader-php-8-5:latest
+        - srt-reader-php-syntax-php-8.5:latest
     entrypoint: ["make", "php-syntax-busybox"]
 
   tests-runner-integration:
@@ -125,3 +131,7 @@ services:
       - ./../Makefile:/home/php/app/Makefile:read-only
       - ./../composer.json:/home/php/app/composer.json:read-only
       - ./../composer.lock:/home/php/app/composer.lock:read-only
+
+configs:
+  php:
+    file: ./containers/php/php-production.ini

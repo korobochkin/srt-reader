@@ -23,6 +23,22 @@ updates:
     assignees:
       - korobochkin
 
+  - package-ecosystem: docker
+    directories:
+      - ./development/containers/php-8.4
+    cooldown:
+      default-days: 10
+    ignore:
+      - dependency-name: "php"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+    open-pull-requests-limit: 5
+    schedule:
+      interval: weekly
+    assignees:
+      - korobochkin
+
   - package-ecosystem: docker-compose
     directories:
       - ./development

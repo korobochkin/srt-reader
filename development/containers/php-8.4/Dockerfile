@@ -3,6 +3,9 @@ FROM php:8.4.5-cli-alpine AS php-base
 SHELL ["/bin/sh", "-euo", "pipefail", "-c"]
 
 RUN \
+   mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+
+RUN \
     --mount=type=cache,target=/var/cache/apk,sharing=locked \
     apk update --no-progress \
     && apk upgrade --no-progress \
