@@ -66,7 +66,7 @@ FROM php-base-with-composer AS develop
 
 RUN \
     --mount=type=cache,target=/var/cache/apk,sharing=locked \
-    apk add --progress=no autoconf build-base linux-headers \
+    apk add --progress=no autoconf build-base linux-headers strace \
     && pecl install xdebug
 
 USER $UID:$GID
