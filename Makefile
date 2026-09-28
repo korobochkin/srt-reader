@@ -109,6 +109,25 @@ tests-unit:
 tests-integration:
 	./vendor/bin/phpunit --no-progress --config=tests/integration/phpunit.xml --testsuite=integration
 
+strace-base-example:
+	strace \
+		--follow-forks \
+		--output=tmp/strace-base-example.log \
+		--string-limit=1024 \
+		--absolute-timestamps \
+		--syscall-times \
+		php development/examples/base-example.php
+
+strace-%-base-example:
+	strace \
+		--follow-forks \
+		--output=tmp/strace-$*-base-example.log \
+		--string-limit=1024 \
+		--absolute-timestamps \
+		--syscall-times \
+		--trace=$* \
+		php development/examples/base-example.php
+
 git-diff:
 	mkdir -p tmp
 	rm -f tmp/diff.txt
@@ -139,4 +158,6 @@ git-diff:
 	grammar \
 	tests-unit \
 	tests-integration \
+	strace-base-example \
+	strace-%-base-example \
 	git-diff
