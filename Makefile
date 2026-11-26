@@ -7,7 +7,7 @@ else
 endif
 
 build:
-	docker compose --file development/docker-compose.yml build
+	docker compose --file development/docker-compose.yml build --pull
 
 bake-tests:
 	docker buildx bake --file=development/docker-compose-tests.yml
