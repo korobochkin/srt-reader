@@ -27,7 +27,7 @@ RUN \
     --mount=type=cache,target=/var/cache/apk,sharing=locked \
     apk add --progress=no unzip
 
-COPY --from=composer/composer:2.10-bin --chmod=0555 /composer /usr/bin/composer
+COPY --from=composer/composer:2.11-bin --chmod=0555 /composer /usr/bin/composer
 
 FROM php-base-with-composer AS dependencies
 
