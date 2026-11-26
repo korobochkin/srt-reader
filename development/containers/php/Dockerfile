@@ -66,7 +66,8 @@ FROM php-base-with-composer AS develop
 
 RUN \
     --mount=type=cache,target=/var/cache/apk,sharing=locked \
+    --mount=type=bind,from=ghcr.io/php/pie:bin,source=/pie,target=/usr/local/bin/pie \
     apk add --progress=no autoconf build-base linux-headers strace \
-    && pecl install xdebug
+    && pie install --no-cache xdebug/xdebug:^3.6@dev
 
 USER $UID:$GID
