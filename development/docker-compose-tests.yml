@@ -119,7 +119,7 @@ services:
     build:
       <<: *service-php-build
       tags:
-        - srt-reader-php-syntax-php-8.5:latest
+        - srt-reader-php-syntax-php-8.6:latest
     entrypoint: [ "make", "php-syntax-busybox" ]
 
   tests-runner-integration:
