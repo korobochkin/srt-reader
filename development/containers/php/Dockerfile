@@ -15,6 +15,9 @@ RUN \
    addgroup -g $GID php \
    && adduser -u $UID -G php -D -s /bin/sh php
 
+RUN \
+   docker-php-ext-install mbstring
+
 USER $UID:$GID
 
 WORKDIR /home/php/app
@@ -69,5 +72,5 @@ RUN \
     --mount=type=bind,from=ghcr.io/php/pie:bin,source=/pie,target=/usr/local/bin/pie \
     apk add --progress=no autoconf build-base linux-headers strace \
     && pie install --no-cache xdebug/xdebug:^3.6@dev
-
+mbstring
 USER $UID:$GID
